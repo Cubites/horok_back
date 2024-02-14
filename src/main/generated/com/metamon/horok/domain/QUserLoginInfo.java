@@ -24,9 +24,11 @@ public class QUserLoginInfo extends EntityPathBase<UserLoginInfo> {
 
     public final QUsers user;
 
+    public final StringPath userLoginEmail = createString("userLoginEmail");
+
     public final NumberPath<Integer> userLoginInfoId = createNumber("userLoginInfoId", Integer.class);
 
-    public final StringPath userLoginType = createString("userLoginType");
+    public final StringPath userLoginRole = createString("userLoginRole");
 
     public QUserLoginInfo(String variable) {
         this(UserLoginInfo.class, forVariable(variable), INITS);
@@ -46,7 +48,7 @@ public class QUserLoginInfo extends EntityPathBase<UserLoginInfo> {
 
     public QUserLoginInfo(Class<? extends UserLoginInfo> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
-        this.user = inits.isInitialized("user") ? new QUsers(forProperty("user")) : null;
+        this.user = inits.isInitialized("user") ? new QUsers(forProperty("user"), inits.get("user")) : null;
     }
 
 }

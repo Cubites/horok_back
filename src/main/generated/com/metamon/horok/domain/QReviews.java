@@ -72,7 +72,7 @@ public class QReviews extends EntityPathBase<Reviews> {
 
     public QReviews(Class<? extends Reviews> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
-        this.user = inits.isInitialized("user") ? new QUsers(forProperty("user")) : null;
+        this.user = inits.isInitialized("user") ? new QUsers(forProperty("user"), inits.get("user")) : null;
     }
 
 }

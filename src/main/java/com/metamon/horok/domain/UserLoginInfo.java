@@ -13,10 +13,18 @@ public class UserLoginInfo {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer userLoginInfoId;
-    private String userLoginType;
 
-    @OneToOne(cascade = CascadeType.ALL,orphanRemoval = true,fetch = FetchType.LAZY)
+    //login/jw 에서 추가
+    //user role
+    private String userLoginRole;
+    //login email
+    private String userLoginEmail;
+
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private Users user;
 
+    public void setUser(Users user) {
+        this.user = user;
+    }
 }
