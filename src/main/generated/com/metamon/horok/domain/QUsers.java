@@ -18,6 +18,8 @@ public class QUsers extends EntityPathBase<Users> {
 
     private static final long serialVersionUID = 1714089561L;
 
+    private static final PathInits INITS = PathInits.DIRECT2;
+
     public static final QUsers users = new QUsers("users");
 
     public final BooleanPath agreement = createBoolean("agreement");
@@ -36,6 +38,8 @@ public class QUsers extends EntityPathBase<Users> {
 
     public final NumberPath<Integer> userId = createNumber("userId", Integer.class);
 
+    public final QUserLoginInfo userLoginInfo;
+
     public final StringPath userLoginType = createString("userLoginType");
 
     public final StringPath userNickname = createString("userNickname");
@@ -45,15 +49,24 @@ public class QUsers extends EntityPathBase<Users> {
     public final DateTimePath<java.time.LocalDateTime> userRegdate = createDateTime("userRegdate", java.time.LocalDateTime.class);
 
     public QUsers(String variable) {
-        super(Users.class, forVariable(variable));
+        this(Users.class, forVariable(variable), INITS);
     }
 
     public QUsers(Path<? extends Users> path) {
-        super(path.getType(), path.getMetadata());
+        this(path.getType(), path.getMetadata(), PathInits.getFor(path.getMetadata(), INITS));
     }
 
     public QUsers(PathMetadata metadata) {
-        super(Users.class, metadata);
+        this(metadata, PathInits.getFor(metadata, INITS));
+    }
+
+    public QUsers(PathMetadata metadata, PathInits inits) {
+        this(Users.class, metadata, inits);
+    }
+
+    public QUsers(Class<? extends Users> type, PathMetadata metadata, PathInits inits) {
+        super(type, metadata, inits);
+        this.userLoginInfo = inits.isInitialized("userLoginInfo") ? new QUserLoginInfo(forProperty("userLoginInfo"), inits.get("userLoginInfo")) : null;
     }
 
 }
