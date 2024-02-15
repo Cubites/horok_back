@@ -19,9 +19,6 @@ public class Reviews {
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Integer reviewId;
-    private String storeName;
-    private String storeCategory;
-    private String address;
     private double reviewScore;
     private String reviewContent;
     private Integer credit;
@@ -30,8 +27,10 @@ public class Reviews {
     private String image1;
     private String image2;
     private String image3;
-    private double longitude;
-    private double latitude;
+
+    @ManyToOne
+    @JoinColumn(name = "store_id")
+    private Stores store;
 
     //Review가 생성될 때 FolderReviews도 같이 생성됨 따라서 Cascade옵션 킴
     @OneToMany(mappedBy = "review",cascade = CascadeType.ALL)
