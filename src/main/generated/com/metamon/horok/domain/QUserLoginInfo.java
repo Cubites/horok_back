@@ -48,7 +48,7 @@ public class QUserLoginInfo extends EntityPathBase<UserLoginInfo> {
 
     public QUserLoginInfo(Class<? extends UserLoginInfo> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
-        this.user = inits.isInitialized("user") ? new QUsers(forProperty("user")) : null;
+        this.user = inits.isInitialized("user") ? new QUsers(forProperty("user"), inits.get("user")) : null;
     }
 
 }

@@ -3,7 +3,6 @@ package com.metamon.horok.domain;
 import jakarta.persistence.*;
 import lombok.*;
 
-
 @Entity
 @Builder
 @Table(name = "token_info")
@@ -11,6 +10,7 @@ import lombok.*;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 public class TokenInfo {
+
     /*DB에서 임시로 사용하기 위해 만들었다.*/
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,4 +25,5 @@ public class TokenInfo {
     public void saveTokenValue(String accessToken) {
         this.accessToken =accessToken;
     }
+    // join ~~ user - userinfo select * from user where in~~~
 }

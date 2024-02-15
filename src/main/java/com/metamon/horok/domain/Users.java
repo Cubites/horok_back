@@ -51,12 +51,16 @@ public class Users {
     @OneToMany(mappedBy = "user",cascade = CascadeType.ALL,orphanRemoval = true)
     private List<Favors> favorsList = new ArrayList<>();
 
+    //추가 login/jw
+    //login 관련 정보 저장용
+    @OneToOne(mappedBy = "user",cascade = CascadeType.ALL)
+    private UserLoginInfo userLoginInfo;
     /*
     * 연관관계를 편의 메소드 모음
     * */
     //유저에게 카드를 추가하기 위한 메서드
     public void addNewCard(Cards card){
-        card.setUser_id(this.userId);
+       // card.setUser_id(this.userId);
         this.cardsList.add(card);
     }
 

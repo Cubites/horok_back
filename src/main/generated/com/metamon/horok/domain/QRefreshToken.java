@@ -53,7 +53,7 @@ public class QRefreshToken extends EntityPathBase<RefreshToken> {
     public QRefreshToken(Class<? extends RefreshToken> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
         this.token = inits.isInitialized("token") ? new QToken(forProperty("token"), inits.get("token")) : null;
-        this.user = inits.isInitialized("user") ? new QUsers(forProperty("user")) : null;
+        this.user = inits.isInitialized("user") ? new QUsers(forProperty("user"), inits.get("user")) : null;
     }
 
 }

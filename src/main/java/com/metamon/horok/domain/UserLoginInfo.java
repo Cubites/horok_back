@@ -27,6 +27,4 @@ public class UserLoginInfo {
     public void setUser(Users user) {
         this.user = user;
     }
-
-
 }

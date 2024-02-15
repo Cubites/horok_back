@@ -38,5 +38,5 @@ out/
 
 ### config ###
 application-config.properties
-
+application-sec.properties
 MANIFEST.MF
