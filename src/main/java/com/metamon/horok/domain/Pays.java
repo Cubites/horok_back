@@ -1,5 +1,6 @@
 package com.metamon.horok.domain;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -19,6 +20,7 @@ public class Pays {
     private Integer payId;
 
     private Integer credit;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime payDate;
     @Column(columnDefinition = "TINYINT(4)")
     private Boolean isWritten;
@@ -27,5 +29,9 @@ public class Pays {
     private String storeName;
     private String storeCategory;
     private String payAddr;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="card_number")
+    private Cards card;
 
 }
