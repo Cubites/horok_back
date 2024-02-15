@@ -22,6 +22,8 @@ public class QCards extends EntityPathBase<Cards> {
 
     public final StringPath cardImg = createString("cardImg");
 
+    public final StringPath cardLogo = createString("cardLogo");
+
     public final StringPath cardName = createString("cardName");
 
     public final StringPath cardNumber = createString("cardNumber");

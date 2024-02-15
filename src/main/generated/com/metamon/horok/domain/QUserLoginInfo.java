@@ -24,9 +24,11 @@ public class QUserLoginInfo extends EntityPathBase<UserLoginInfo> {
 
     public final QUsers user;
 
+    public final StringPath userLoginEmail = createString("userLoginEmail");
+
     public final NumberPath<Integer> userLoginInfoId = createNumber("userLoginInfoId", Integer.class);
 
-    public final StringPath userLoginType = createString("userLoginType");
+    public final StringPath userLoginRole = createString("userLoginRole");
 
     public QUserLoginInfo(String variable) {
         this(UserLoginInfo.class, forVariable(variable), INITS);
