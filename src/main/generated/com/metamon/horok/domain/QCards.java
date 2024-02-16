@@ -22,13 +22,13 @@ public class QCards extends EntityPathBase<Cards> {
 
     public final StringPath cardImg = createString("cardImg");
 
+    public final StringPath cardLogo = createString("cardLogo");
+
     public final StringPath cardName = createString("cardName");
 
     public final StringPath cardNumber = createString("cardNumber");
 
     public final ListPath<Pays, QPays> payList = this.<Pays, QPays>createList("payList", Pays.class, QPays.class, PathInits.DIRECT2);
-
-    public final NumberPath<Integer> user_id = createNumber("user_id", Integer.class);
 
     public QCards(String variable) {
         super(Cards.class, forVariable(variable));

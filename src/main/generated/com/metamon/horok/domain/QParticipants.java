@@ -49,7 +49,7 @@ public class QParticipants extends EntityPathBase<Participants> {
     public QParticipants(Class<? extends Participants> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
         this.folder = inits.isInitialized("folder") ? new QFolders(forProperty("folder")) : null;
-        this.user = inits.isInitialized("user") ? new QUsers(forProperty("user")) : null;
+        this.user = inits.isInitialized("user") ? new QUsers(forProperty("user"), inits.get("user")) : null;
     }
 
 }

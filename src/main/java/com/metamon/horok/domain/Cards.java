@@ -24,9 +24,11 @@ public class Cards{
 
     //카드를 등록할 때 user_id값이 필수임, 단방향 매핑이라 내부적으로 특정 값이 필요
 
-    private Integer user_id;
+    //private Integer user_id;
+
     private String cardName;
     private String cardImg;
+    private String cardLogo;
 
     @OneToMany
     @JoinColumn(name = "card_number")
@@ -42,10 +44,10 @@ public class Cards{
 
     }
 
-    public void setUser_id(Integer userId){
-        this.user_id = userId;
-
-    }
+//    public void setUser_id(Integer userId){
+//        this.user_id = userId;
+//
+//    }
 
 
 }
