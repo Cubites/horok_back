@@ -22,8 +22,8 @@ import org.springframework.web.cors.CorsConfigurationSource;
 import java.util.Collections;
 
 
-//@EnableWebSecurity
-//@Configuration
+@EnableWebSecurity
+@Configuration
 @RequiredArgsConstructor
 public class HorokSecurityConfig {
     private final TestHandler testHandler;
@@ -51,7 +51,7 @@ public class HorokSecurityConfig {
             @Override
             public CorsConfiguration getCorsConfiguration(HttpServletRequest request) {
                 CorsConfiguration config = new CorsConfiguration();
-                config.setAllowedOrigins(Collections.singletonList("http://localhost:3000"));
+                config.addAllowedOriginPattern("*");
                 config.setAllowedMethods(Collections.singletonList("*"));
                 config.setAllowCredentials(true);
                 config.setAllowedHeaders(Collections.singletonList("*"));
