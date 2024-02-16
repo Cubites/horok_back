@@ -35,4 +35,8 @@ public class Participants {
         folder.getParticipantsList().add(this);
         user.getParticipantsList().add(this);
     }
+
+    public void setFolderFavor(Boolean folderFavor) {
+        this.folderFavor = folderFavor;
+    }
 }
