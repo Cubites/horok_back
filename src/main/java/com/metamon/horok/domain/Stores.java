@@ -1,13 +1,15 @@
 package com.metamon.horok.domain;
 
 import jakarta.persistence.*;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
+import lombok.*;
 
 @Getter
 @Entity
+@Builder
 @Table(name = "stores")
 @EqualsAndHashCode
+@AllArgsConstructor
+@NoArgsConstructor
 public class Stores {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

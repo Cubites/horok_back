@@ -7,6 +7,7 @@ import com.querydsl.core.types.dsl.*;
 import com.querydsl.core.types.PathMetadata;
 import javax.annotation.processing.Generated;
 import com.querydsl.core.types.Path;
+import com.querydsl.core.types.dsl.PathInits;
 
 
 /**
@@ -17,7 +18,11 @@ public class QPays extends EntityPathBase<Pays> {
 
     private static final long serialVersionUID = -2023082406L;
 
+    private static final PathInits INITS = PathInits.DIRECT2;
+
     public static final QPays pays = new QPays("pays");
+
+    public final QCards card;
 
     public final NumberPath<Integer> credit = createNumber("credit", Integer.class);
 
@@ -36,15 +41,24 @@ public class QPays extends EntityPathBase<Pays> {
     public final StringPath storeName = createString("storeName");
 
     public QPays(String variable) {
-        super(Pays.class, forVariable(variable));
+        this(Pays.class, forVariable(variable), INITS);
     }
 
     public QPays(Path<? extends Pays> path) {
-        super(path.getType(), path.getMetadata());
+        this(path.getType(), path.getMetadata(), PathInits.getFor(path.getMetadata(), INITS));
     }
 
     public QPays(PathMetadata metadata) {
-        super(Pays.class, metadata);
+        this(metadata, PathInits.getFor(metadata, INITS));
+    }
+
+    public QPays(PathMetadata metadata, PathInits inits) {
+        this(Pays.class, metadata, inits);
+    }
+
+    public QPays(Class<? extends Pays> type, PathMetadata metadata, PathInits inits) {
+        super(type, metadata, inits);
+        this.card = inits.isInitialized("card") ? new QCards(forProperty("card")) : null;
     }
 
 }
