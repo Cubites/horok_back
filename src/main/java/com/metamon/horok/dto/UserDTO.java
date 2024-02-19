@@ -7,7 +7,7 @@ import lombok.Setter;
 @Setter
 public class UserDTO {
     private Integer userId;
-    private byte[] userProfile;
+    private String userProfile;
     private String userNickname;
     private Integer userReviewCnt;
     private Integer userFolderCnt;

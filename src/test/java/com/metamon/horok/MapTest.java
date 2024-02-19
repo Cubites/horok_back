@@ -38,7 +38,7 @@ public class MapTest {
         Users user = Users.builder()
             .userNickname("졸린몰랑이")
             .agreement(true)
-            .userProfile("/images/folder_icon.png".getBytes())
+            .userProfile("/images/folder_icon.png")
             .personalCode("weetbt98brtb987rtb")
             .userLoginType("1")
             .build();
@@ -47,7 +47,7 @@ public class MapTest {
         user = Users.builder()
             .userNickname("즐거운망곰이")
             .agreement(true)
-            .userProfile("/images/folder_icon.png".getBytes())
+            .userProfile("/images/folder_icon.png")
             .personalCode("brtkblr9ts0b80tbrb")
             .userLoginType("1")
             .build();
@@ -279,27 +279,27 @@ public class MapTest {
         Folders folder2 = folderRepo.findByFolderName("카페");
         Folders folder3 = folderRepo.findByFolderName("밥집");
 
-        Reviews review1 = reviewsRepo.findByReviewWithStore("한상", "졸린몰랑이");
-        Reviews review2 = reviewsRepo.findByReviewWithStore("파쿠모리 홍대2호점", "졸린몰랑이");
-        Reviews review3 = reviewsRepo.findByReviewWithStore("카페게이트 동교점", "졸린몰랑이");
-        Reviews review4 = reviewsRepo.findByReviewWithStore("피에스타7", "즐거운망곰이");
-        Reviews review5 = reviewsRepo.findByReviewWithStore("감나무집기사식당", "즐거운망곰이");
-        Reviews review6 = reviewsRepo.findByReviewWithStore("홍대최대포", "즐거운망곰이");
+//        Reviews review1 = reviewsRepo.findByReviewWithStore("한상", "졸린몰랑이");
+//        Reviews review2 = reviewsRepo.findByReviewWithStore("파쿠모리 홍대2호점", "졸린몰랑이");
+//        Reviews review3 = reviewsRepo.findByReviewWithStore("카페게이트 동교점", "졸린몰랑이");
+//        Reviews review4 = reviewsRepo.findByReviewWithStore("피에스타7", "즐거운망곰이");
+//        Reviews review5 = reviewsRepo.findByReviewWithStore("감나무집기사식당", "즐거운망곰이");
+//        Reviews review6 = reviewsRepo.findByReviewWithStore("홍대최대포", "즐거운망곰이");
 
-        FolderReviews folderReview = FolderReviews.builder().folder(folder1).review(review1).build();
-        folderReviewsRepo.save(folderReview);
-        folderReview = FolderReviews.builder().folder(folder1).review(review2).build();
-        folderReviewsRepo.save(folderReview);
-        folderReview = FolderReviews.builder().folder(folder2).review(review3).build();
-        folderReviewsRepo.save(folderReview);
-        folderReview = FolderReviews.builder().folder(folder2).review(review4).build();
-        folderReviewsRepo.save(folderReview);
-        folderReview = FolderReviews.builder().folder(folder3).review(review2).build();
-        folderReviewsRepo.save(folderReview);
-        folderReview = FolderReviews.builder().folder(folder3).review(review5).build();
-        folderReviewsRepo.save(folderReview);
-        folderReview = FolderReviews.builder().folder(folder3).review(review6).build();
-        folderReviewsRepo.save(folderReview);
+//        FolderReviews folderReview = FolderReviews.builder().folder(folder1).review(review1).build();
+//        folderReviewsRepo.save(folderReview);
+//        folderReview = FolderReviews.builder().folder(folder1).review(review2).build();
+//        folderReviewsRepo.save(folderReview);
+//        folderReview = FolderReviews.builder().folder(folder2).review(review3).build();
+//        folderReviewsRepo.save(folderReview);
+//        folderReview = FolderReviews.builder().folder(folder2).review(review4).build();
+//        folderReviewsRepo.save(folderReview);
+//        folderReview = FolderReviews.builder().folder(folder3).review(review2).build();
+//        folderReviewsRepo.save(folderReview);
+//        folderReview = FolderReviews.builder().folder(folder3).review(review5).build();
+//        folderReviewsRepo.save(folderReview);
+//        folderReview = FolderReviews.builder().folder(folder3).review(review6).build();
+//        folderReviewsRepo.save(folderReview);
     }
 
     @Test
@@ -328,4 +328,5 @@ public class MapTest {
         }
         System.out.println("*****************************************");
     }
+
 }

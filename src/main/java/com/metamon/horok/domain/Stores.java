@@ -3,6 +3,9 @@ package com.metamon.horok.domain;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Getter
 @Entity
 @Builder
@@ -19,4 +22,8 @@ public class Stores {
     private String storeAddr;
     private Double latitude;
     private Double longitude;
+
+    @OneToMany
+    @JoinColumn(name = "store_id")
+    private List<Pays> payList = new ArrayList<>();
 }

@@ -8,10 +8,7 @@ import com.metamon.horok.service.UserService;
 import com.metamon.horok.vo.MapReviewVO;
 import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
@@ -35,7 +32,12 @@ public class UsersController {
     public Optional<UserDTO> userInfo(){
         int testId = 171;
         return userService.getUserInfoByUserId(testId);
+    }
 
+    @PostMapping("/api/users/info")
+    public Optional<UserDTO> userInfo2(){
+        int testId = 171;
+        return userService.getUserInfoByUserId(testId);
     }
 
     //마이페이지에 닉네임 출력 , 이미지 출력 , 카드 리스트 출력

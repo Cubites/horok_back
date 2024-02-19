@@ -32,9 +32,11 @@ public class Reviews {
     @JoinColumn(name = "store_id")
     private Stores store;
 
-    //Review가 생성될 때 FolderReviews도 같이 생성됨 따라서 Cascade옵션 킴
-    @OneToMany(mappedBy = "review",cascade = CascadeType.ALL)
+    // Review가 생성될 때 FolderReviews도 같이 생성됨 따라서 Cascade옵션 킴
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "folder_id")
     private List<FolderReviews> folderReviewsList = new ArrayList<>();
+
     @ManyToOne
     @JoinColumn(name = "user_id")
     private Users user;
@@ -43,5 +45,15 @@ public class Reviews {
     public void setUsersReview(Users user){
         this.user = user;
         user.getReviewsList().add(this);
+    }
+
+    public void setImage1(String image1) {
+        this.image1 = image1;
+    }
+    public void setImage2(String image2) {
+        this.image2 = image2;
+    }
+    public void setImage3(String image3) {
+        this.image3 = image3;
     }
 }
