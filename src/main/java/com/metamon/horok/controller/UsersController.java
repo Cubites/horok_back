@@ -35,6 +35,7 @@ public class UsersController {
     public Optional<UserDTO> userInfo(){
         int testId = 171;
         return userService.getUserInfoByUserId(testId);
+
     }
 
     //마이페이지에 닉네임 출력 , 이미지 출력 , 카드 리스트 출력
