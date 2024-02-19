@@ -44,7 +44,7 @@ public class QUsers extends EntityPathBase<Users> {
 
     public final StringPath userNickname = createString("userNickname");
 
-    public final StringPath userProfile = createString("userProfile");
+    public final ArrayPath<byte[], Byte> userProfile = createArray("userProfile", byte[].class);
 
     public final DateTimePath<java.time.LocalDateTime> userRegdate = createDateTime("userRegdate", java.time.LocalDateTime.class);
 

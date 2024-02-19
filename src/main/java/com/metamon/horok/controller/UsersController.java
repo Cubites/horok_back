@@ -1,6 +1,6 @@
 package com.metamon.horok.controller;
 
-import com.metamon.horok.domain.Users;
+import com.metamon.horok.config.javaconfig.UserIdFromJwt;
 import com.metamon.horok.dto.UserDTO;
 import com.metamon.horok.mapper.MapMapper;
 import com.metamon.horok.repository.UsersRepository;
@@ -8,7 +8,10 @@ import com.metamon.horok.service.UserService;
 import com.metamon.horok.vo.MapReviewVO;
 import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 import java.util.Optional;
@@ -42,8 +45,8 @@ public class UsersController {
 
     // 지도에 표시할 리뷰 조회 컨트롤러
     @PostMapping("/api/users/reviews")
-    public List<MapReviewVO> MapReview(@RequestBody Users user) {
-        return mapMapper.readAllReviewFromUserId(user.getUserId());
+    public List<MapReviewVO> MapReview(@UserIdFromJwt Integer userId) {
+        return mapMapper.readAllReviewFromUserId(userId);
     }
 
 }

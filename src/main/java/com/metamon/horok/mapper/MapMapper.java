@@ -7,5 +7,5 @@ import java.util.List;
 
 @Mapper
 public interface MapMapper {
-    List<MapReviewVO> readAllReviewFromUserId(Integer user_id);
+    List<MapReviewVO> readAllReviewFromUserId(Integer inputVal);
 }
