@@ -13,8 +13,10 @@ public class MapReviewVO {
     private Integer folderId;
     private String userNickname;
     private String folderName;
+    private String folderImg;
     private String storeName;
     private String storeCategory;
+    private String storeAddr;
     private Double latitude;
     private Double longitude;
     private String image1;

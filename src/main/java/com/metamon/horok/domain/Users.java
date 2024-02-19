@@ -22,8 +22,7 @@ public class Users {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer userId;
     private String userNickname;
-    private String userProfile;
-
+    private byte[] userProfile;
     private String userLoginType;
     private String personalCode;
     @Column(columnDefinition = "TINYINT(4)")

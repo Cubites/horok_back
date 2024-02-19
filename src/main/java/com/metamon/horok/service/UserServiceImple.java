@@ -22,7 +22,6 @@ public class UserServiceImple implements UserService {
     public Optional<UserDTO> getUserInfoByUserId(Integer userId) {
         Optional<Users> userOptional = userRepo.findById(userId);
 
-
         return userOptional.map(user -> {
             UserDTO userDTO = new UserDTO();
             userDTO.setUserId(user.getUserId());
