@@ -29,6 +29,7 @@ public class PaysServiceImpl implements PaysService {
 
         for(Object[] result : resultList){
             PaysDTO paysDTO = new PaysDTO();
+
             paysDTO.setPayId((Integer)result[0]);
             paysDTO.setCardNumber((String) result[1]);
             paysDTO.setCredit((Integer) result[2]);
@@ -38,20 +39,29 @@ public class PaysServiceImpl implements PaysService {
             paysDTO.setStoreName((String) result[6]);
             paysDTO.setStoreCategory((String) result[7]);
             paysDTO.setPayAddr((String) result[8]);
-            //cardNumber duplicated
-            paysDTO.setUserId((Integer) result[10]);
-            paysDTO.setCardName((String) result[11]);
-            paysDTO.setCardImg((String) result[12]);
-            paysDTO.setCardLogo((String) result[13]);
+            paysDTO.setStoreId((Integer) result[9]);
+            //cardNumber duplicated : index : 10
+            paysDTO.setUserId((Integer) result[11]);
+            paysDTO.setCardName((String) result[12]);
+            paysDTO.setCardImg((String) result[13]);
+            paysDTO.setCardLogo((String) result[14]);
+
 
             paysDTOList.add(paysDTO);
         }
         paysDTOList.sort(Comparator.comparing(PaysDTO::getPayDate).reversed());
+//        paysDTOList.sort(Comparator.comparing((PaysDTO dto) -> dto.getPayDate(), Comparator.nullsLast(Comparator.reverseOrder())));
+
         return paysDTOList;
     }
 
     @Override
     public SimplePayDTO getPayByPayId(Integer payId){
         return payRepo.findByPayId(payId);
+    }
+
+    @Override
+    public void markAsWritten(Integer payId){
+        payRepo.markAsWritten(payId);
     }
 }

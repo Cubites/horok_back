@@ -73,6 +73,10 @@ public class Users {
        // card.setUser_id(this.userId);
         this.cardsList.add(card);
     }
+    public void addUserLoginInfo(UserLoginInfo userLoginInfo){
+        userLoginInfo.setUser(this);
+        this.userLoginInfo = userLoginInfo;
+    }
 
 
 }

@@ -21,7 +21,8 @@ public class Folders {
     private String folderName;
     private String folderImg;
 
-    @OneToMany(mappedBy = "folder")
+    @OneToMany
+    @JoinColumn(name = "folder_id")
     private List<FolderReviews> folderList = new ArrayList<>();
 
     //floder가 생성될 때 participants도 같이 생성될 수 있음으로, cascade옵션 추가

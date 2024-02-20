@@ -4,6 +4,7 @@ import com.metamon.horok.domain.Users;
 import com.metamon.horok.dto.CardDTO;
 import com.metamon.horok.dto.UserDTO;
 import com.metamon.horok.repository.ParticipantsRepository;
+import com.metamon.horok.repository.ReviewsRepository;
 import com.metamon.horok.repository.UsersRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -27,10 +28,10 @@ import java.util.stream.Collectors;
 @Transactional
 public class UserServiceImple implements UserService {
     private final UsersRepository userRepo;
-    //    private final ReviewsRepository reviewsRepo;
+    private final ReviewsRepository reviewsRepo;
     private final ParticipantsRepository partiRepo;
 
-    //프로필 경로
+    // 프로필 경로
     @Value("${upload.path}")
     private String path;
 
@@ -41,7 +42,7 @@ public class UserServiceImple implements UserService {
         return userOptional.map(user -> {
             UserDTO userDTO = new UserDTO();
 
-            //마이페이지 닉네임, 프로필 출력 
+            // 마이페이지 닉네임, 프로필 출력
             userDTO.setUserId(user.getUserId());
             userDTO.setUserNickname(user.getUserNickname());
             userDTO.setUserProfile(user.getUserProfile());
@@ -50,44 +51,45 @@ public class UserServiceImple implements UserService {
             userDTO.setCardsList(
                     user.getCardsList().stream()
                             .map(card -> CardDTO.toDto(card))
-                            .collect(Collectors.toList())
-            );
+                            .collect(Collectors.toList()));
+            userDTO.setUserReviewCnt(reviewsRepo.countByUser_UserId(userId));
+            userDTO.setUserFolderCnt(partiRepo.countByUser_UserId(userId));
+
             return userDTO;
         });
     }
 
-    //닉네임 수정
+    // 닉네임 수정
     @Override
     public void updateUserNickname(UserDTO userDTO) {
         userRepo.updateUserNickname(userDTO.getUserNickname(), userDTO.getUserId());
     }
 
-//    @Override
-//    public void updateUserProfile(UserDTO userDTO) {
-//        userRepo.updateUserProfile(userDTO.getUserProfile(), userDTO.getUserId());
-//    }
+    // @Override
+    // public void updateUserProfile(UserDTO userDTO) {
+    // userRepo.updateUserProfile(userDTO.getUserProfile(), userDTO.getUserId());
+    // }
 
-    //이미지 업로드
+    // 이미지 업로드
     @Override
     public void updateUserProfile(MultipartFile userProfile, Integer userId) throws IOException {
-        String fileName = UUID.randomUUID().toString() +"_"+ userProfile.getOriginalFilename(); //동일한 사진이어도 다른 이름으로 저장가능하도록 처리 ?!
+        String fileName = UUID.randomUUID().toString() + "_" + userProfile.getOriginalFilename(); // 동일한 사진이어도 다른 이름으로
+                                                                                                  // 저장가능하도록 처리 ?!
         String filePath = path + File.separator + fileName;
         File dest = new File(filePath);
         userProfile.transferTo(dest);
-        userRepo.updateUserProfile(fileName,userId);
+        userRepo.updateUserProfile(fileName, userId);
     }
 
-
-    //통계
+    // 통계
     @Override
-    public List<Object[]> findMonthlyCardUsageByCategory(Integer userId){
+    public List<Object[]> findMonthlyCardUsageByCategory(Integer userId) {
         return userRepo.findMonthlyCardUsageByCategory(userId);
-//    @Override
-//    public List<Object[]> findMonthlyCardUsageByCategory(Integer userId, LocalDateTime startDate){
-//        return userRepo.findMonthlyCardUsageByCategory(userId,startDate);
-//
+        // @Override
+        // public List<Object[]> findMonthlyCardUsageByCategory(Integer userId,
+        // LocalDateTime startDate){
+        // return userRepo.findMonthlyCardUsageByCategory(userId,startDate);
+        //
     }
-
-
 
 }

@@ -10,4 +10,5 @@ public interface PaysService {
 
     public List<PaysDTO> getPaysListByUserId(Integer userId);
     public SimplePayDTO getPayByPayId(Integer payId);
+    public void markAsWritten(Integer payId);
 }
