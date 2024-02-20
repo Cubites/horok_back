@@ -1,6 +1,7 @@
 package com.metamon.horok.controller;
 
 import com.metamon.horok.config.javaconfig.UserIdFromJwt;
+import com.metamon.horok.domain.Users;
 
 import com.metamon.horok.dto.UserDTO;
 import com.metamon.horok.mapper.MapMapper;
@@ -44,9 +45,8 @@ public class UsersController {
     }
 
     @GetMapping("/api/users/info")
-    public Optional<UserDTO> userInfo() {
-        int testId = 171;
-        return userService.getUserInfoByUserId(testId);
+    public Optional<UserDTO> userInfo( @UserIdFromJwt Integer userId){
+        return userService.getUserInfoByUserId(userId);
     }
 
     @PostMapping("/api/users/info")
