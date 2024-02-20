@@ -20,10 +20,10 @@ public class TokenInfo {
     private String accessToken;
     private String refreshToken;
 
+    private String provider;
     private String email;
 
     public void saveTokenValue(String accessToken) {
         this.accessToken =accessToken;
     }
-    // join ~~ user - userinfo select * from user where in~~~
 }

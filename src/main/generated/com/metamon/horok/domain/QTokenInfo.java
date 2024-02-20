@@ -25,6 +25,8 @@ public class QTokenInfo extends EntityPathBase<TokenInfo> {
 
     public final NumberPath<Integer> id = createNumber("id", Integer.class);
 
+    public final StringPath provider = createString("provider");
+
     public final StringPath refreshToken = createString("refreshToken");
 
     public QTokenInfo(String variable) {

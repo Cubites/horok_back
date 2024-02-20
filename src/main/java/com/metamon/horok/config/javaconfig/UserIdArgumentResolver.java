@@ -9,8 +9,6 @@ import org.springframework.web.method.support.ModelAndViewContainer;
 @Component
 public class UserIdArgumentResolver implements HandlerMethodArgumentResolver {
 
-
-
     @Override
     public boolean supportsParameter(MethodParameter parameter) {
         boolean hasAnnotation = parameter.hasParameterAnnotation(UserIdFromJwt.class);
@@ -25,7 +23,7 @@ public class UserIdArgumentResolver implements HandlerMethodArgumentResolver {
 
         //지금은 그냥 user Id주자
         //여기에 사용하려는 userId를 셋팅해주세요
-        Integer userIdInteger = Integer.valueOf("1");
+        Integer userIdInteger = Integer.valueOf("181");
         return userIdInteger;
     }
 }

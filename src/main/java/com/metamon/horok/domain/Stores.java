@@ -1,11 +1,13 @@
 package com.metamon.horok.domain;
 
 import jakarta.persistence.*;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
+import lombok.*;
 
 @Getter
 @Entity
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 @Table(name = "stores")
 @EqualsAndHashCode
 public class Stores {

@@ -40,3 +40,4 @@ out/
 application-config.properties
 application-sec.properties
 MANIFEST.MF
+application-file.properties

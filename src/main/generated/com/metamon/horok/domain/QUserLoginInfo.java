@@ -28,6 +28,8 @@ public class QUserLoginInfo extends EntityPathBase<UserLoginInfo> {
 
     public final NumberPath<Integer> userLoginInfoId = createNumber("userLoginInfoId", Integer.class);
 
+    public final StringPath userLoginProvider = createString("userLoginProvider");
+
     public final StringPath userLoginRole = createString("userLoginRole");
 
     public QUserLoginInfo(String variable) {
