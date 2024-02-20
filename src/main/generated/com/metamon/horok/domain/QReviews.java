@@ -22,8 +22,6 @@ public class QReviews extends EntityPathBase<Reviews> {
 
     public static final QReviews reviews = new QReviews("reviews");
 
-    public final StringPath address = createString("address");
-
     public final NumberPath<Integer> credit = createNumber("credit", Integer.class);
 
     public final ListPath<FolderReviews, QFolderReviews> folderReviewsList = this.<FolderReviews, QFolderReviews>createList("folderReviewsList", FolderReviews.class, QFolderReviews.class, PathInits.DIRECT2);
@@ -33,10 +31,6 @@ public class QReviews extends EntityPathBase<Reviews> {
     public final StringPath image2 = createString("image2");
 
     public final StringPath image3 = createString("image3");
-
-    public final NumberPath<Double> latitude = createNumber("latitude", Double.class);
-
-    public final NumberPath<Double> longitude = createNumber("longitude", Double.class);
 
     public final DateTimePath<java.time.LocalDateTime> payDate = createDateTime("payDate", java.time.LocalDateTime.class);
 
@@ -48,9 +42,7 @@ public class QReviews extends EntityPathBase<Reviews> {
 
     public final NumberPath<Double> reviewScore = createNumber("reviewScore", Double.class);
 
-    public final StringPath storeCategory = createString("storeCategory");
-
-    public final StringPath storeName = createString("storeName");
+    public final QStores store;
 
     public final QUsers user;
 
@@ -72,6 +64,7 @@ public class QReviews extends EntityPathBase<Reviews> {
 
     public QReviews(Class<? extends Reviews> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
+        this.store = inits.isInitialized("store") ? new QStores(forProperty("store")) : null;
         this.user = inits.isInitialized("user") ? new QUsers(forProperty("user"), inits.get("user")) : null;
     }
 

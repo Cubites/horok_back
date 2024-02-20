@@ -3,15 +3,14 @@ package com.metamon.horok.repository;
 import com.metamon.horok.domain.Folders;
 import com.metamon.horok.domain.Participants;
 import com.metamon.horok.dto.PartFolderDTO;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
-import java.util.List;
-
 public interface ParticipantsRepository extends JpaRepository<Participants,Integer> {
     Participants findByFolder(Folders folderName);
-
+    Integer countByUser_UserId(Integer userId);
 
     //Object[] findByUserId(Integer userId);
     /*@Query("select new com.metamon.horok.dto.SimplePayDTO(p.payId as payId, p.credit as credit, p.payDate as payDate, p.storeName as storeName, p.storeCategory as storeCategory, p.payAddr as payAddr) from Pays p where payId = :payId")

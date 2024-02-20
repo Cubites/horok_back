@@ -37,4 +37,8 @@ public class Pays {
     @JoinColumn(name="card_number")
     private Cards card;
 
+    @ManyToOne(fetch=FetchType.LAZY)
+    @JoinColumn(name="store_id")
+    private Stores store;
+
 }

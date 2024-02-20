@@ -7,8 +7,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Getter
-@Builder
 @Entity
+@Builder
 @Table(name = "stores")
 @EqualsAndHashCode
 @AllArgsConstructor
@@ -22,7 +22,9 @@ public class Stores {
     private String storeAddr;
     private Double latitude;
     private Double longitude;
+
     @OneToMany
     @JoinColumn(name = "store_id")
     private List<Pays> payList = new ArrayList<>();
 }
+

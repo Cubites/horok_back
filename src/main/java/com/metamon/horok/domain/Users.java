@@ -21,10 +21,8 @@ public class Users {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer userId;
-
     private String userNickname;
     private String userProfile;
-
     private String userLoginType;
     private String personalCode;
     @Column(columnDefinition = "TINYINT(4)")

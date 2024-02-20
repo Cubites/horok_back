@@ -19,31 +19,9 @@ public class FolderReviews {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer folderReviewId;
 
-    @Column(name="folder_id")
-    private Integer folderId;
-    @Column(name="review_id")
-    private Integer reviewId;
-
-//    @ManyToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(name = "folder_id")
-//    private Folders folder;
-//    @ManyToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(name = "review_id")
-//    private Reviews review;
-
     @OneToMany(mappedBy = "folderReview")
     private List<Favors> favorsList = new ArrayList<>();
     @OneToMany(mappedBy = "folderReview")
     private List<Replies> repliesList = new ArrayList<>();
 
-
-    /*
-    연관관계 편의메서드
-    * */
-//    public void setFoldersAndReviews(Folders folder, Reviews review){
-//        this.folder =folder;
-//        this.review = review;
-//        folder.getFolderList().add(this);
-//        review.getFolderReviewsList().add(this);
-//    }
 }
