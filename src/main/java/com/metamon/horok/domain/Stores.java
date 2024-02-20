@@ -27,4 +27,3 @@ public class Stores {
     @JoinColumn(name = "store_id")
     private List<Pays> payList = new ArrayList<>();
 }
-

@@ -21,69 +21,62 @@ import org.springframework.web.cors.CorsConfigurationSource;
 
 import java.util.Collections;
 
-
 @EnableWebSecurity
 @Configuration
 @RequiredArgsConstructor
 public class HorokSecurityConfig {
 
-    private final HorokOAuthUserService horokOAuthUserService;
-    //OAuth2요청 실패시 작동
-    private final HorokAuthenticationFailureHandler horokAuthenticationFailureHandler;
-    //OAuth2요청 성공시 작동
-    private final HorokSuccessHandler horokSuccessHandler;
+        private final HorokOAuthUserService horokOAuthUserService;
+        // OAuth2요청 실패시 작동
+        private final HorokAuthenticationFailureHandler horokAuthenticationFailureHandler;
+        // OAuth2요청 성공시 작동
+        private final HorokSuccessHandler horokSuccessHandler;
 
-    private final JwtExceptionFilter jwtExceptionFilter;
-    private final JwtTokenAuthFilters jwtTokenAuthFilters;
-    private final HttpCookieOAuth2AuthorizationRequestRepository httpCookieOAuth2AuthorizationRequestRepository;
+        private final JwtExceptionFilter jwtExceptionFilter;
+        private final JwtTokenAuthFilters jwtTokenAuthFilters;
+        private final HttpCookieOAuth2AuthorizationRequestRepository httpCookieOAuth2AuthorizationRequestRepository;
 
-    private final RestAuthenticationEntryPoint restAuthenticationEntryPoint;
+        private final RestAuthenticationEntryPoint restAuthenticationEntryPoint;
 
+        @Bean
+        public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
-    @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
+                http.csrf((auth) -> auth.disable())
+                                .formLogin((auth) -> auth.disable())
+                                .httpBasic((auth) -> auth.disable())
+                                .sessionManagement((s) -> s.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
 
+                http.exceptionHandling(ex -> ex.authenticationEntryPoint(restAuthenticationEntryPoint));
+                // 리액트 연동을 위한 cors설정
+                http.cors(cors -> cors.configurationSource(new CorsConfigurationSource() {
+                        @Override
+                        public CorsConfiguration getCorsConfiguration(HttpServletRequest request) {
+                                CorsConfiguration config = new CorsConfiguration();
+                                config.setAllowedOriginPatterns(Collections.singletonList("*"));
+                                config.setAllowedMethods(Collections.singletonList("*"));
+                                config.setAllowCredentials(true);
+                                config.setAllowedHeaders(Collections.singletonList("*"));
+                                return config;
+                        }
+                }));
 
-        http.csrf((auth) -> auth.disable())
-                .formLogin((auth) -> auth.disable())
-                .httpBasic((auth)->auth.disable())
-                .sessionManagement((s)->s.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
+                http.authorizeHttpRequests((auth) ->
 
-        http.exceptionHandling(ex->
-                ex.authenticationEntryPoint(restAuthenticationEntryPoint));
-        //리액트 연동을 위한 cors설정
-        http.cors(cors -> cors.configurationSource(new CorsConfigurationSource() {
-            @Override
-            public CorsConfiguration getCorsConfiguration(HttpServletRequest request) {
-                CorsConfiguration config = new CorsConfiguration();
-                config.setAllowedOriginPatterns(Collections.singletonList("*"));
-                config.setAllowedMethods(Collections.singletonList("*"));
-                config.setAllowCredentials(true);
-                config.setAllowedHeaders(Collections.singletonList("*"));
-                return config;
-            }
-        }));
+                auth.requestMatchers("/", "/oauth2/**", "/login/**", "/token/**").permitAll()
+                                // .anyRequest().authenticated()
+                                .anyRequest().permitAll())
+                                .addFilterBefore(jwtTokenAuthFilters, UsernamePasswordAuthenticationFilter.class)
+                                .addFilterBefore(jwtExceptionFilter, JwtTokenAuthFilters.class).oauth2Login((oauth2) ->
 
-        http.authorizeHttpRequests((auth) ->
+                                oauth2.authorizationEndpoint(authorizationEndpointConfig -> authorizationEndpointConfig
+                                                .authorizationRequestRepository(
+                                                                httpCookieOAuth2AuthorizationRequestRepository))
+                                                .successHandler(horokSuccessHandler)
+                                                .userInfoEndpoint((us) -> us.userService(horokOAuthUserService))
+                                                .failureHandler(horokAuthenticationFailureHandler));
 
-                                auth.requestMatchers("/","/oauth2/**","/login/**","/token/**").permitAll()
-                                        //.anyRequest().authenticated()
-                        .anyRequest().permitAll()
-                ).
-                addFilterBefore(jwtTokenAuthFilters, UsernamePasswordAuthenticationFilter.class)
-                .addFilterBefore(jwtExceptionFilter, JwtTokenAuthFilters.class).
-                oauth2Login((oauth2)->
+                return http.build();
 
-                        oauth2.
-                                authorizationEndpoint(authorizationEndpointConfig -> authorizationEndpointConfig.authorizationRequestRepository(httpCookieOAuth2AuthorizationRequestRepository)).
-                                successHandler( horokSuccessHandler)
-                                .userInfoEndpoint((us)->
-                                        us.userService(horokOAuthUserService))
-                                .failureHandler(horokAuthenticationFailureHandler));
-
-        return  http.build();
-
-    }
-
+        }
 
 }
