@@ -22,9 +22,13 @@ public class QFolderReviews extends EntityPathBase<FolderReviews> {
 
     public final ListPath<Favors, QFavors> favorsList = this.<Favors, QFavors>createList("favorsList", Favors.class, QFavors.class, PathInits.DIRECT2);
 
+    public final NumberPath<Integer> folderId = createNumber("folderId", Integer.class);
+
     public final NumberPath<Integer> folderReviewId = createNumber("folderReviewId", Integer.class);
 
     public final ListPath<Replies, QReplies> repliesList = this.<Replies, QReplies>createList("repliesList", Replies.class, QReplies.class, PathInits.DIRECT2);
+
+    public final NumberPath<Integer> reviewId = createNumber("reviewId", Integer.class);
 
     public QFolderReviews(String variable) {
         super(FolderReviews.class, forVariable(variable));

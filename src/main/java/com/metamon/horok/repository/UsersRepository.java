@@ -2,6 +2,8 @@ package com.metamon.horok.repository;
 
 import com.metamon.horok.domain.Users;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 @Repository
