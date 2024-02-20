@@ -18,40 +18,28 @@ public class QFolderReviews extends EntityPathBase<FolderReviews> {
 
     private static final long serialVersionUID = 809547550L;
 
-    private static final PathInits INITS = PathInits.DIRECT2;
-
     public static final QFolderReviews folderReviews = new QFolderReviews("folderReviews");
 
     public final ListPath<Favors, QFavors> favorsList = this.<Favors, QFavors>createList("favorsList", Favors.class, QFavors.class, PathInits.DIRECT2);
 
-    public final QFolders folder;
+    public final NumberPath<Integer> folderId = createNumber("folderId", Integer.class);
 
     public final NumberPath<Integer> folderReviewId = createNumber("folderReviewId", Integer.class);
 
     public final ListPath<Replies, QReplies> repliesList = this.<Replies, QReplies>createList("repliesList", Replies.class, QReplies.class, PathInits.DIRECT2);
 
-    public final QReviews review;
+    public final NumberPath<Integer> reviewId = createNumber("reviewId", Integer.class);
 
     public QFolderReviews(String variable) {
-        this(FolderReviews.class, forVariable(variable), INITS);
+        super(FolderReviews.class, forVariable(variable));
     }
 
     public QFolderReviews(Path<? extends FolderReviews> path) {
-        this(path.getType(), path.getMetadata(), PathInits.getFor(path.getMetadata(), INITS));
+        super(path.getType(), path.getMetadata());
     }
 
     public QFolderReviews(PathMetadata metadata) {
-        this(metadata, PathInits.getFor(metadata, INITS));
-    }
-
-    public QFolderReviews(PathMetadata metadata, PathInits inits) {
-        this(FolderReviews.class, metadata, inits);
-    }
-
-    public QFolderReviews(Class<? extends FolderReviews> type, PathMetadata metadata, PathInits inits) {
-        super(type, metadata, inits);
-        this.folder = inits.isInitialized("folder") ? new QFolders(forProperty("folder")) : null;
-        this.review = inits.isInitialized("review") ? new QReviews(forProperty("review"), inits.get("review")) : null;
+        super(FolderReviews.class, metadata);
     }
 
 }

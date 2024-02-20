@@ -16,8 +16,9 @@ public class PaysDTO {
     private Timestamp payDate;
 
     private Byte isWritten;
-
     private Byte expiration;
+
+    private Integer storeId;
     private String storeName;
     private String storeCategory;
     private String payAddr;

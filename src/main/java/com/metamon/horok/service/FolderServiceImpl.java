@@ -7,6 +7,7 @@ import com.metamon.horok.dto.FolderDTO;
 import com.metamon.horok.repository.FolderRepository;
 import com.metamon.horok.repository.ParticipantsRepository;
 import com.metamon.horok.repository.UsersRepository;
+import com.metamon.horok.dto.PartFolderDTO;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -24,6 +25,11 @@ public class FolderServiceImpl implements FolderService {
     private final FolderRepository folderRepo;
     private final ParticipantsRepository partRepo;
     private final UsersRepository userRepo;
+
+    @Override
+    public List<PartFolderDTO> getFolderListByUserId(Integer userId){
+        return partRepo.findByUserIdWithFolderName(userId);
+    }
 
     @Override
     public List<FolderDTO> getFolderListByUserId(Boolean isFavor, Integer userId) {

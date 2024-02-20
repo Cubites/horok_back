@@ -21,7 +21,6 @@ public class Folders {
     private String folderName;
     private String folderImg;
 
-    //@OneToMany(mappedBy = "folder")
     @OneToMany
     @JoinColumn(name = "folder_id")
     private List<FolderReviews> folderList = new ArrayList<>();

@@ -11,4 +11,5 @@ public class AuthUserDto {
     private Integer userId;
     private String email;
     private String nickname;
+    private String role;
 }

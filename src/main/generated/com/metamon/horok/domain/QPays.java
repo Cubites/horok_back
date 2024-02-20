@@ -9,7 +9,6 @@ import javax.annotation.processing.Generated;
 import com.querydsl.core.types.Path;
 import com.querydsl.core.types.dsl.PathInits;
 
-
 /**
  * QPays is a Querydsl query type for Pays
  */
@@ -32,9 +31,12 @@ public class QPays extends EntityPathBase<Pays> {
 
     public final StringPath payAddr = createString("payAddr");
 
-    public final DateTimePath<java.time.LocalDateTime> payDate = createDateTime("payDate", java.time.LocalDateTime.class);
+    public final DateTimePath<java.time.LocalDateTime> payDate = createDateTime("payDate",
+            java.time.LocalDateTime.class);
 
     public final NumberPath<Integer> payId = createNumber("payId", Integer.class);
+
+    public final QStores store;
 
     public final StringPath storeCategory = createString("storeCategory");
 
@@ -59,7 +61,7 @@ public class QPays extends EntityPathBase<Pays> {
     public QPays(Class<? extends Pays> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
         this.card = inits.isInitialized("card") ? new QCards(forProperty("card")) : null;
+        this.store = inits.isInitialized("store") ? new QStores(forProperty("store")) : null;
     }
 
 }
-

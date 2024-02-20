@@ -8,8 +8,10 @@
             , f.folder_id AS folderId
             , r.user_nickname AS userNickname
             , f.folder_name AS folderName
+            , f.folder_img AS folderImg
             , s.store_name AS storeName
             , s.store_category AS storeCategory
+            , s.store_addr AS storeAddr
             , s.latitude
             , s.longitude
             , r.image1

@@ -50,7 +50,7 @@ public class QReplies extends EntityPathBase<Replies> {
 
     public QReplies(Class<? extends Replies> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
-        this.folderReview = inits.isInitialized("folderReview") ? new QFolderReviews(forProperty("folderReview"), inits.get("folderReview")) : null;
+        this.folderReview = inits.isInitialized("folderReview") ? new QFolderReviews(forProperty("folderReview")) : null;
         this.user = inits.isInitialized("user") ? new QUsers(forProperty("user"), inits.get("user")) : null;
     }
 
