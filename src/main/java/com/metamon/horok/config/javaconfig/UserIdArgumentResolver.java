@@ -23,8 +23,7 @@ public class UserIdArgumentResolver implements HandlerMethodArgumentResolver {
         //추후에 여기서 값 꺼내서 줄 것
         //AuthUserDto principal = (AuthUserDto)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
-        //지금은 그냥 user Id주자
-        //여기에 사용하려는 userId를 셋팅해주세요
+
         Integer userIdInteger = Integer.valueOf("171");
       
         return userIdInteger;
