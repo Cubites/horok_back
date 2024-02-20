@@ -4,6 +4,6 @@ import com.metamon.horok.dto.PartFolderDTO;
 
 import java.util.List;
 
-public interface FoldersService {
+public interface FolderService {
     List<PartFolderDTO> getFolderListByUserId(Integer userId);
 }

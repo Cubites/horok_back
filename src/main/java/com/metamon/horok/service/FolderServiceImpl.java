@@ -10,7 +10,7 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class FolderServiceImpl implements FoldersService{
+public class FolderServiceImpl implements FolderService {
 
     private final ParticipantsRepository partRepo;
     @Override
