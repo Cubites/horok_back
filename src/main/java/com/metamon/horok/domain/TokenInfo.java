@@ -25,5 +25,4 @@ public class TokenInfo {
     public void saveTokenValue(String accessToken) {
         this.accessToken =accessToken;
     }
-    // join ~~ user - userinfo select * from user where in~~~
 }

@@ -24,14 +24,4 @@ public class FolderReviews {
     @OneToMany(mappedBy = "folderReview")
     private List<Replies> repliesList = new ArrayList<>();
 
-
-    /*
-    연관관계 편의메서드
-    * */
-    public void setFoldersAndReviews(Folders folder, Reviews review){
-//        this.folder = folder;
-//        this.review = review;
-        folder.getFolderList().add(this);
-        review.getFolderReviewsList().add(this);
-    }
 }

@@ -1,13 +1,16 @@
 package com.metamon.horok.controller;
 
+import com.metamon.horok.config.javaconfig.UserIdFromJwt;
+import com.metamon.horok.dto.PartFolderDTO;
 import com.metamon.horok.dto.FolderDTO;
-import com.metamon.horok.service.FolderService;
 import lombok.extern.java.Log;
+import com.metamon.horok.service.FolderService;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
-
 
 @RestController
 @Log
@@ -18,6 +21,9 @@ public class FoldersController {
     public FoldersController(FolderService folderService){
         this.folderService = folderService;
     }
+    @GetMapping("/api/folders/user")
+    public List<PartFolderDTO> folderList(@UserIdFromJwt Integer userId){
+        return foldersService.getFolderListByUserId(userId);
 
     @GetMapping("/api/folders/{is_favor}")
     public List<FolderDTO> folderList(@PathVariable Boolean is_favor){

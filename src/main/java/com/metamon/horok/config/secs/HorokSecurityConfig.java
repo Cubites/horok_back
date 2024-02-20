@@ -61,7 +61,7 @@ public class HorokSecurityConfig {
 
         http.authorizeHttpRequests((auth) ->
                 //일단 모든 요청에 대해 시큐리티 작동안하게 막음 추후에 풀 것
-                auth.requestMatchers("/","/oauth2/**","/login/**","/token/**").permitAll()
+                auth.requestMatchers("/","/oauth2/**","/login/**","/token/**","/api/**").permitAll()
                         //.anyRequest().authenticated()
                         .anyRequest().permitAll()
         ).

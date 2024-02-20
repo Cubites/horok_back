@@ -21,6 +21,7 @@ public class SimplePayDTO {
     private String storeName;
     private String storeCategory;
     private String payAddr;
+    //private Integer storeId;
 
 
 }

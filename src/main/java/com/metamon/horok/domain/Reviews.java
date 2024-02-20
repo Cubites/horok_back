@@ -35,6 +35,7 @@ public class Reviews {
     // Review가 생성될 때 FolderReviews도 같이 생성됨 따라서 Cascade옵션 킴
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "folder_id")
+
     private List<FolderReviews> folderReviewsList = new ArrayList<>();
 
     @ManyToOne
