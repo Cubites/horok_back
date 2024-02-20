@@ -26,10 +26,10 @@ public class PaysController {
     }
 
     @GetMapping("/api/pays/{payId}")
-    public SimplePayDTO payInfo(@PathVariable Integer payId){
+    public SimplePayDTO payInfo(@PathVariable("payId") Integer payId){
         return paysService.getPayByPayId(payId);
     }
 
     @PatchMapping("/api/pays/{payId}")
-    public void updatePaysAsWritten(@PathVariable Integer payId){ paysService.markAsWritten(payId);}
+    public void updatePaysAsWritten(@PathVariable("payId") Integer payId){ paysService.markAsWritten(payId);}
 }

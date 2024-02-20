@@ -27,7 +27,7 @@ public class FoldersController {
     }
 
     @GetMapping("/api/folders/{is_favor}")
-    public List<FolderDTO> folderList(@PathVariable Boolean is_favor){
+    public List<FolderDTO> folderList(@PathVariable("is_favor") Boolean is_favor){
         int testId = 171;
         if(is_favor) {
             return folderService.getFolderListByUserId(is_favor, testId);
