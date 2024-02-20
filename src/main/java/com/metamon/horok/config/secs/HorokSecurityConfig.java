@@ -22,8 +22,8 @@ import org.springframework.web.cors.CorsConfigurationSource;
 import java.util.Collections;
 
 
-//@EnableWebSecurity
-//@Configuration
+@EnableWebSecurity
+@Configuration
 @RequiredArgsConstructor
 public class HorokSecurityConfig {
     private final TestHandler testHandler;
@@ -51,7 +51,8 @@ public class HorokSecurityConfig {
             @Override
             public CorsConfiguration getCorsConfiguration(HttpServletRequest request) {
                 CorsConfiguration config = new CorsConfiguration();
-                config.setAllowedOrigins(Collections.singletonList("http://localhost:3000"));
+                config.addAllowedOriginPattern("*");
+                //config.setAllowedOrigins(Collections.singletonList());
                 config.setAllowedMethods(Collections.singletonList("*"));
                 config.setAllowCredentials(true);
                 config.setAllowedHeaders(Collections.singletonList("*"));
@@ -61,7 +62,7 @@ public class HorokSecurityConfig {
 
         http.authorizeHttpRequests((auth) ->
                 //일단 모든 요청에 대해 시큐리티 작동안하게 막음 추후에 풀 것
-                auth.requestMatchers("/","/oauth2/**","/login/**","/token/**").permitAll()
+                auth.requestMatchers("/","/oauth2/**","/login/**","/token/**","/api/**").permitAll()
                         //.anyRequest().authenticated()
                         .anyRequest().permitAll()
         ).
