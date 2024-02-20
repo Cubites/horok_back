@@ -19,7 +19,7 @@ public class UserLoginInfo {
     private String userLoginRole;
     //login email
     private String userLoginEmail;
-
+    private String userLoginProvider;
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private Users user;
@@ -27,4 +27,6 @@ public class UserLoginInfo {
     public void setUser(Users user) {
         this.user = user;
     }
+
+
 }

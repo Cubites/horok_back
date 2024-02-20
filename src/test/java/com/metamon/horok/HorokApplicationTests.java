@@ -8,6 +8,7 @@ class HorokApplicationTests {
 
 	@Test
 	void contextLoads() {
+
 	}
 
 }

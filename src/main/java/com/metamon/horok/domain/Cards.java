@@ -28,7 +28,6 @@ public class Cards{
 
     private String cardName;
     private String cardImg;
-    private String cardLogo;
 
     @OneToMany
     @JoinColumn(name = "card_number")

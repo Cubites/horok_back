@@ -25,7 +25,9 @@ public class Reviews {
     private LocalDateTime payDate;
     private LocalDateTime reviewDate;
     private String image1;
+
     private String image2;
+
     private String image3;
 
     @ManyToOne
@@ -33,7 +35,9 @@ public class Reviews {
     private Stores store;
 
     //Review가 생성될 때 FolderReviews도 같이 생성됨 따라서 Cascade옵션 킴
-    @OneToMany(mappedBy = "review",cascade = CascadeType.ALL)
+//    @OneToMany(mappedBy = "review",cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name="folder_id")
     private List<FolderReviews> folderReviewsList = new ArrayList<>();
     @ManyToOne
     @JoinColumn(name = "user_id")

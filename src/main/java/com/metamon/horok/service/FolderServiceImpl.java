@@ -1,9 +1,12 @@
 package com.metamon.horok.service;
 
+import com.metamon.horok.domain.Folders;
 import com.metamon.horok.domain.Participants;
+import com.metamon.horok.domain.Users;
 import com.metamon.horok.dto.FolderDTO;
 import com.metamon.horok.repository.FolderRepository;
 import com.metamon.horok.repository.ParticipantsRepository;
+import com.metamon.horok.repository.UsersRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -16,10 +19,11 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 @Transactional
-public class FolderServiceImple implements FolderService {
+public class FolderServiceImpl implements FolderService {
 
     private final FolderRepository folderRepo;
-    private final ParticipantsRepository partiRepo;
+    private final ParticipantsRepository partRepo;
+    private final UsersRepository userRepo;
 
     @Override
     public List<FolderDTO> getFolderListByUserId(Boolean isFavor, Integer userId) {
@@ -69,7 +73,7 @@ public class FolderServiceImple implements FolderService {
     @Transactional
     public String updateFolderFavor(Map map) {
         map.forEach((key, value) -> {
-            Optional<Participants> participantsOptional = partiRepo.findById(Integer.parseInt(String.valueOf(key)));
+            Optional<Participants> participantsOptional = partRepo.findById(Integer.parseInt(String.valueOf(key)));
 
             if(participantsOptional.isPresent()) {
                 Participants parti = participantsOptional.get();
@@ -78,5 +82,22 @@ public class FolderServiceImple implements FolderService {
         });
         return "true";
     }
+
+    @Override
+    @Transactional
+    public String createFolder(Map<String, String> map, Integer userId) {
+        Users u = userRepo.findById(userId).orElse(null);
+        Folders f = Folders.builder().folderName(map.get("folderName")).folderImg(map.get("folderImg")).build();
+        Participants p = Participants.builder().folder(f).user(u).folderFavor(false).build();
+        Folders savedFolder = folderRepo.save(f);
+        Participants savedParticipant = partRepo.save(p);
+        if (savedFolder != null && savedParticipant != null) {
+            return "true";  // 저장 성공
+        } else {
+            return "false";  // 저장 실패
+        }
+    }
+
+
 }
 

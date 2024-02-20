@@ -13,5 +13,4 @@ public class UserDTO {
     private Integer userReviewCnt;
     private Integer userFolderCnt;
 
-
 }

@@ -5,11 +5,11 @@ import lombok.*;
 
 @Getter
 @Entity
-@Builder
 @Table(name = "stores")
 @EqualsAndHashCode
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class Stores {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,4 +19,8 @@ public class Stores {
     private String storeAddr;
     private Double latitude;
     private Double longitude;
+
+//    @OneToMany
+//    @JoinColumn(name = "store_id")
+//    private List<Pays> payList = new ArrayList<>();
 }

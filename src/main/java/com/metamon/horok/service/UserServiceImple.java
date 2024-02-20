@@ -28,6 +28,7 @@ public class UserServiceImple implements UserService {
             userDTO.setUserId(user.getUserId());
             userDTO.setUserNickname(user.getUserNickname());
             userDTO.setUserProfile(user.getUserProfile());
+//            userDTO.setUserProfile("/images/main-maru.png");
 
             userDTO.setUserReviewCnt(reviewsRepo.countByUser_UserId(userId));
             userDTO.setUserFolderCnt(partiRepo.countByUser_UserId(userId));
