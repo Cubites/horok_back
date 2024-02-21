@@ -27,7 +27,9 @@ public class Reviews {
     private LocalDateTime payDate;
     private LocalDateTime reviewDate;
     private String image1;
+
     private String image2;
+
     private String image3;
 
     @ManyToOne
@@ -49,7 +51,6 @@ public class Reviews {
         this.user = user;
         user.getReviewsList().add(this);
     }
-
     public void setImage1(String image1) {
         this.image1 = image1;
     }

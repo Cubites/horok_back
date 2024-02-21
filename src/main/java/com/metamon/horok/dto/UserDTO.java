@@ -14,5 +14,6 @@ public class UserDTO {
     private String userNickname;
     private Integer userReviewCnt;
     private Integer userFolderCnt;
+
     private List<CardDTO> cardsList;
 }

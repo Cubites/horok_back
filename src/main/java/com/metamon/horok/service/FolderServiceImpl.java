@@ -1,10 +1,13 @@
 package com.metamon.horok.service;
 
+import com.metamon.horok.domain.Folders;
 import com.metamon.horok.domain.Participants;
+import com.metamon.horok.domain.Users;
 import com.metamon.horok.dto.FolderDTO;
-import com.metamon.horok.dto.PartFolderDTO;
 import com.metamon.horok.repository.FolderRepository;
 import com.metamon.horok.repository.ParticipantsRepository;
+import com.metamon.horok.repository.UsersRepository;
+import com.metamon.horok.dto.PartFolderDTO;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -14,13 +17,14 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class FolderServiceImpl implements FolderService {
 
     private final FolderRepository folderRepo;
     private final ParticipantsRepository partRepo;
+    private final UsersRepository userRepo;
 
     @Override
     public List<PartFolderDTO> getFolderListByUserId(Integer userId){
@@ -84,4 +88,22 @@ public class FolderServiceImpl implements FolderService {
         });
         return "true";
     }
+
+    @Override
+    @Transactional
+    public String createFolder(Map<String, String> map, Integer userId) {
+        Users u = userRepo.findById(userId).orElse(null);
+        Folders f = Folders.builder().folderName(map.get("folderName")).folderImg(map.get("folderImg")).build();
+        Participants p = Participants.builder().folder(f).user(u).folderFavor(false).build();
+        Folders savedFolder = folderRepo.save(f);
+        Participants savedParticipant = partRepo.save(p);
+        if (savedFolder != null && savedParticipant != null) {
+            return "true";  // 저장 성공
+        } else {
+            return "false";  // 저장 실패
+        }
+    }
+
+
 }
+

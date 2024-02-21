@@ -26,5 +26,4 @@ public class TokenInfo {
     public void saveTokenValue(String accessToken) {
         this.accessToken = accessToken;
     }
-
 }

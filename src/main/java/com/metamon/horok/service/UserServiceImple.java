@@ -9,6 +9,9 @@ import com.metamon.horok.repository.UsersRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
+
+import org.springframework.core.io.FileSystemResource;
+
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -42,6 +45,7 @@ public class UserServiceImple implements UserService {
             userDTO.setUserId(user.getUserId());
             userDTO.setUserNickname(user.getUserNickname());
             userDTO.setUserProfile(user.getUserProfile());
+//            userDTO.setUserProfile("/images/main-maru.png");
 
             // 마이페이지 카드 리스트 출력
             userDTO.setCardsList(
