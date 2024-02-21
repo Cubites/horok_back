@@ -42,12 +42,23 @@ public interface UsersRepository extends JpaRepository<Users, Integer> {
     // userId);
 
     // 카테고리별로 나누기만하고 카테고리별 사용자의 월별 사용금액의 총합을 나타내는 쿼리문 통계
-    @Query("SELECT YEAR(p.payDate), MONTH(p.payDate), p.storeCategory, SUM(p.credit) " +
-            "FROM Users u " +
-            "JOIN u.cardsList c " +
-            "JOIN c.payList p " +
-            "WHERE u.userId = :userId " +
-            "GROUP BY YEAR(p.payDate), MONTH(p.payDate), p.storeCategory")
+
+
+//    @Query("SELECT YEAR(p.payDate), MONTH(p.payDate), p.storeCategory, SUM(p.credit)" +
+//            "FROM Users u " +
+//            "JOIN u.cardsList c " +
+//            "JOIN c.payList p " +
+//            "WHERE u.userId = :userId " +
+//            "GROUP BY YEAR(p.payDate), MONTH(p.payDate), p.storeCategory")
+//    List<Object[]> findMonthlyCardUsageByCategory(@Param("userId") Integer userId);
+@Query("SELECT p.storeCategory, SUM(p.credit) " +
+        "FROM Users u " +
+        "JOIN u.cardsList c " +
+        "JOIN c.payList p " +
+        "WHERE u.userId = :userId " +
+        "AND YEAR(p.payDate) = YEAR(CURRENT_DATE()) " +
+        "AND MONTH(p.payDate) = MONTH(CURRENT_DATE()) " +
+        "GROUP BY p.storeCategory")
     List<Object[]> findMonthlyCardUsageByCategory(@Param("userId") Integer userId);
 
     // MapTest용
