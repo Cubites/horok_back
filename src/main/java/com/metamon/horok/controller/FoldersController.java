@@ -32,7 +32,7 @@ public class FoldersController {
         if(is_favor) {
             return folderService.getFolderListByUserId(is_favor, userId);
         }else {
-            return folderService.getFolderListAllByUserId(testId);
+            return folderService.getFolderListAllByUserId(userId);
         }
     }
 
