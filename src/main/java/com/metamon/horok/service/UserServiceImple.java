@@ -9,9 +9,6 @@ import com.metamon.horok.repository.UsersRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
-
-import org.springframework.core.io.FileSystemResource;
-
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -65,10 +62,16 @@ public class UserServiceImple implements UserService {
         userRepo.updateUserNickname(userDTO.getUserNickname(), userDTO.getUserId());
     }
 
+    // @Override
+    // public void updateUserProfile(UserDTO userDTO) {
+    // userRepo.updateUserProfile(userDTO.getUserProfile(), userDTO.getUserId());
+    // }
+
     // 이미지 업로드
     @Override
     public void updateUserProfile(MultipartFile userProfile, Integer userId) throws IOException {
-        String fileName = UUID.randomUUID().toString() + "_" + userProfile.getOriginalFilename();
+        String fileName = UUID.randomUUID().toString() + "_" + userProfile.getOriginalFilename(); // 동일한 사진이어도 다른 이름으로
+                                                                                                  // 저장가능하도록 처리 ?!
         String filePath = path + File.separator + fileName;
         File dest = new File(filePath);
         userProfile.transferTo(dest);
@@ -79,7 +82,6 @@ public class UserServiceImple implements UserService {
     @Override
     public List<Object[]> findMonthlyCardUsageByCategory(Integer userId) {
         return userRepo.findMonthlyCardUsageByCategory(userId);
-
         // @Override
         // public List<Object[]> findMonthlyCardUsageByCategory(Integer userId,
         // LocalDateTime startDate){
