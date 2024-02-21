@@ -11,7 +11,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
@@ -42,7 +41,6 @@ public class UserServiceImple implements UserService {
             userDTO.setUserId(user.getUserId());
             userDTO.setUserNickname(user.getUserNickname());
             userDTO.setUserProfile(user.getUserProfile());
-//            userDTO.setUserProfile("/images/main-maru.png");
 
             // 마이페이지 카드 리스트 출력
             userDTO.setCardsList(
@@ -51,7 +49,6 @@ public class UserServiceImple implements UserService {
                             .collect(Collectors.toList()));
             userDTO.setUserReviewCnt(reviewsRepo.countByUser_UserId(userId));
             userDTO.setUserFolderCnt(partiRepo.countByUser_UserId(userId));
-
             return userDTO;
         });
     }
@@ -61,32 +58,26 @@ public class UserServiceImple implements UserService {
     public void updateUserNickname(UserDTO userDTO) {
         userRepo.updateUserNickname(userDTO.getUserNickname(), userDTO.getUserId());
     }
-
-    // @Override
-    // public void updateUserProfile(UserDTO userDTO) {
-    // userRepo.updateUserProfile(userDTO.getUserProfile(), userDTO.getUserId());
-    // }
-
+  
     // 이미지 업로드
     @Override
     public void updateUserProfile(MultipartFile userProfile, Integer userId) throws IOException {
-        String fileName = UUID.randomUUID().toString() + "_" + userProfile.getOriginalFilename(); // 동일한 사진이어도 다른 이름으로
-                                                                                                  // 저장가능하도록 처리 ?!
+        String fileName = UUID.randomUUID().toString() + "_" + userProfile.getOriginalFilename(); 
         String filePath = path + File.separator + fileName;
         File dest = new File(filePath);
         userProfile.transferTo(dest);
         userRepo.updateUserProfile(fileName, userId);
     }
 
-    // 통계
     @Override
-    public List<Object[]> findMonthlyCardUsageByCategory(Integer userId) {
-        return userRepo.findMonthlyCardUsageByCategory(userId);
-        // @Override
-        // public List<Object[]> findMonthlyCardUsageByCategory(Integer userId,
-        // LocalDateTime startDate){
-        // return userRepo.findMonthlyCardUsageByCategory(userId,startDate);
-        //
+
+    public List<Object[]> findMonthlyCardUsageByCategory(Integer userId,List<String> cardNumber) {
+        return userRepo.findMonthlyCardUsageByCategory(userId,cardNumber);
+    }
+  
+    @Override
+    public List<Object[]> findYearlyCardUsageByCategory(Integer userId,List<String> cardNumber) {
+        return userRepo.findYearlyCardUsageByCategory(userId,cardNumber);
     }
 
 }
