@@ -10,8 +10,6 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 
-import org.springframework.core.io.FileSystemResource;
-
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -76,15 +74,22 @@ public class UserServiceImple implements UserService {
     }
 
     // 통계
+//    @Override
+//    public List<Object[]> findMonthlyCardUsageByCategory(Integer userId) {
+//        return userRepo.findMonthlyCardUsageByCategory(userId);
+//    }
     @Override
-    public List<Object[]> findMonthlyCardUsageByCategory(Integer userId) {
-        return userRepo.findMonthlyCardUsageByCategory(userId);
+    public List<Object[]> findMonthlyCardUsageByCategory(Integer userId,List<String> cardNumber) {
+        return userRepo.findMonthlyCardUsageByCategory(userId,cardNumber);
+    }
 
-        // @Override
-        // public List<Object[]> findMonthlyCardUsageByCategory(Integer userId,
-        // LocalDateTime startDate){
-        // return userRepo.findMonthlyCardUsageByCategory(userId,startDate);
-        //
+//    @Override
+//    public List<Object[]> findYearlyCardUsageByCategory(Integer userId) {
+//        return userRepo.findYearlyCardUsageByCategory(userId);
+//    }
+    @Override
+    public List<Object[]> findYearlyCardUsageByCategory(Integer userId,List<String> cardNumber) {
+        return userRepo.findYearlyCardUsageByCategory(userId,cardNumber);
     }
 
 }
