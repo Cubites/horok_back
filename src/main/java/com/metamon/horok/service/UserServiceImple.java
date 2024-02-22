@@ -22,7 +22,7 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
 @Transactional
-public class UserServiceImpl implements UserService {
+public class UserServiceImple implements UserService {
     private final UsersRepository userRepo;
     private final ReviewsRepository reviewsRepo;
     private final ParticipantsRepository partiRepo;
