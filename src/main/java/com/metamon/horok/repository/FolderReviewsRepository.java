@@ -4,5 +4,5 @@ import com.metamon.horok.domain.FolderReviews;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface FolderReviewsRepository extends JpaRepository<FolderReviews,Integer> {
-
+    FolderReviews findByFolderIdAndReviewId(Integer folderId, Integer reviewId);
 }

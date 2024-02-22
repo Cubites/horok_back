@@ -1,17 +1,18 @@
 package com.metamon.horok.controller;
 
 
+import com.metamon.horok.config.javaconfig.UserIdFromJwt;
+import com.metamon.horok.dto.ReplyDTO;
 import com.metamon.horok.dto.WrittenReviewDTO;
 import com.metamon.horok.service.ReviewsService;
 import jakarta.transaction.Transactional;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 @RestController
 @Transactional
@@ -47,5 +48,10 @@ public class ReviewsController {
                 .credit(credit).build();
 
         reviewsService.writeReview(reviewDTO);
+    }
+
+    @GetMapping("/api/reviews/replies/{folderId}/{reviewId}")
+    public List<ReplyDTO> repliesList (@UserIdFromJwt Integer loginId, @PathVariable Integer folderId, @PathVariable Integer reviewId){
+        return reviewsService.getReplies(loginId, folderId, reviewId);
     }
 }
