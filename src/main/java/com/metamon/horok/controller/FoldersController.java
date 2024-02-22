@@ -27,12 +27,12 @@ public class FoldersController {
     }
 
     @GetMapping("/api/folders/{is_favor}")
-    public List<FolderDTO> folderList(@PathVariable Boolean is_favor, @UserIdFromJwt Integer userId){
+    public List<FolderDTO> folderList(@PathVariable("is_favor") Boolean is_favor, @UserIdFromJwt Integer userId){
 
         if(is_favor) {
             return folderService.getFolderListByUserId(is_favor, userId);
         }else {
-            return folderService.getFolderListAllByUserId(testId);
+            return folderService.getFolderListAllByUserId(userId);
         }
     }
 
