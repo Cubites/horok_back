@@ -9,4 +9,6 @@ public interface FolderReviewsRepository extends JpaRepository<FolderReviews,Int
 
     @Query("select fr.folderReviewId from FolderReviews fr WHERE fr.folderId = :folderId AND fr.reviewId = :reviewId")
     public int findByFolderIdAndReviewId(@Param("folderId") int folderId, @Param("reviewId")int reviewId);
+  
+    FolderReviews findByFolderIdAndReviewId(Integer folderId, Integer reviewId);
 }

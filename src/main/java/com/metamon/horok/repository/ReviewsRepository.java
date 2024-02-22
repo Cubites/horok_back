@@ -7,6 +7,7 @@ import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
+
 public interface ReviewsRepository extends JpaRepository<Reviews, Integer> {
 
     Integer countByUser_UserId(Integer userId);

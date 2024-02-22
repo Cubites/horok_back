@@ -27,18 +27,25 @@ public class FoldersController {
     }
 
     @GetMapping("/api/folders/{is_favor}")
-    public List<FolderDTO> folderList(@PathVariable("is_favor") Boolean is_favor){
-        int testId = 171;
+    public List<FolderDTO> folderList(@PathVariable("is_favor") Boolean is_favor, @UserIdFromJwt Integer userId){
+
         if(is_favor) {
-            return folderService.getFolderListByUserId(is_favor, testId);
+            return folderService.getFolderListByUserId(is_favor, userId);
         }else {
-            return folderService.getFolderListAllByUserId(testId);
+            return folderService.getFolderListAllByUserId(userId);
         }
     }
 
     @PatchMapping("/api/folders/favor/edit")
     public String folderFavorEdit (@RequestBody Map<String, String> data){
-        int testId = 171;
         return folderService.updateFolderFavor(data);
     }
+
+    @PostMapping("/api/folders/make")
+    public String folderMake( @UserIdFromJwt Integer userId, @RequestBody Map<String, String> map){
+        System.out.println(map);
+        return folderService.createFolder( map, userId);
+    }
+
+
 }

@@ -11,7 +11,7 @@ import lombok.*;
 @Getter
 public class TokenInfo {
 
-    /*DB에서 임시로 사용하기 위해 만들었다.*/
+    /* DB에서 임시로 사용하기 위해 만들었다. */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "token_info_id")
@@ -20,9 +20,10 @@ public class TokenInfo {
     private String accessToken;
     private String refreshToken;
 
+    private String provider;
     private String email;
 
     public void saveTokenValue(String accessToken) {
-        this.accessToken =accessToken;
+        this.accessToken = accessToken;
     }
 }

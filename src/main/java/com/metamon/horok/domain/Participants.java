@@ -14,7 +14,7 @@ public class Participants {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer folderParticipantsId;
-    @Column(columnDefinition = "TINYINT(4)")
+    @Column(columnDefinition = "TINYINT(4)" )
     private Boolean folderFavor;
 
     @ManyToOne(fetch = FetchType.LAZY)

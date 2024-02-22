@@ -8,11 +8,11 @@ import java.util.List;
 
 @Getter
 @Entity
-@Builder
 @Table(name = "stores")
 @EqualsAndHashCode
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class Stores {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,4 +27,3 @@ public class Stores {
     @JoinColumn(name = "store_id")
     private List<Pays> payList = new ArrayList<>();
 }
-

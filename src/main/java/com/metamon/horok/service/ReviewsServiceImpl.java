@@ -1,14 +1,9 @@
 package com.metamon.horok.service;
 
-import com.metamon.horok.domain.FolderReviews;
-import com.metamon.horok.domain.Reviews;
-import com.metamon.horok.domain.Stores;
-import com.metamon.horok.domain.Users;
+import com.metamon.horok.domain.*;
+import com.metamon.horok.dto.ReplyDTO;
 import com.metamon.horok.dto.WrittenReviewDTO;
-import com.metamon.horok.repository.FolderReviewsRepository;
-import com.metamon.horok.repository.ReviewsRepository;
-import com.metamon.horok.repository.StoresRepository;
-import com.metamon.horok.repository.UsersRepository;
+import com.metamon.horok.repository.*;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -30,6 +25,8 @@ public class ReviewsServiceImpl implements ReviewsService{
     private final StoresRepository storeRepo;
     private final ReviewsRepository reviewRepo;
     private final FolderReviewsRepository folderReviewsRepo;
+
+    private final RepliesRepository replyRepo;
 
     @Value("${upload.path}")
     private String path;
@@ -104,8 +101,29 @@ public class ReviewsServiceImpl implements ReviewsService{
         return reviewRepo.findReviewsWithFolder(folderId);
     }
 
-//    @Override
-//    public List<Reviews> test(Integer folderId){
-//        return reviewRepo.findReviewsByFolderId(folderId);
-//    }
+    public List<ReplyDTO> getReplies(Integer loginId,Integer folderId, Integer reviewId) {
+        //폴더 리뷰 아이디 조회
+        FolderReviews fr = folderReviewsRepo.findByFolderIdAndReviewId(folderId, reviewId);
+        //리뷰 조회
+        List<Replies> repliesList = replyRepo.findByFolderReview_FolderReviewIdOrderByReplyDateAsc(fr.getFolderReviewId());
+
+        List<ReplyDTO> dtoList = new ArrayList<>();
+        for (Replies reply : repliesList) {
+            Users u = userRepo.findById(reply.getUser().getUserId()).orElse(null);
+            ReplyDTO dto = new ReplyDTO();
+
+            dto.setUserId(u.getUserId());
+            dto.setUserNickname(u.getUserNickname());
+            dto.setUserProfile(u.getUserProfile());
+            dto.setReplyId(reply.getReplyId());
+            dto.setReplyContent(reply.getReplyContent());
+            dto.setReplyDate(reply.getReplyDate());
+            dto.setFolderReviewId(fr.getFolderReviewId());
+            dto.setLoginId(loginId);
+
+            dtoList.add(dto);
+        }
+
+        return dtoList;
+    }
 }

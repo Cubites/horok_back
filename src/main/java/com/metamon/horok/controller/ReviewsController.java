@@ -4,6 +4,7 @@ package com.metamon.horok.controller;
 import com.metamon.horok.config.javaconfig.UserIdFromJwt;
 import com.metamon.horok.domain.Reviews;
 import com.metamon.horok.dto.ReviewDTO;
+import com.metamon.horok.dto.ReplyDTO;
 import com.metamon.horok.dto.WrittenReviewDTO;
 import com.metamon.horok.repository.FolderReviewsRepository;
 import com.metamon.horok.service.FavorsService;
@@ -17,6 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -73,7 +75,7 @@ public class ReviewsController {
 
         for(Reviews review : reviewList){
             int folderReviewId = frRepo.findByFolderIdAndReviewId(folderId, review.getReviewId());
-//            Map map = favorsService.getFavorInfo(userId, folderReviewId);
+
             result.add(ReviewDTO
                     .builder()
                     .reviewId(review.getReviewId())
@@ -92,8 +94,6 @@ public class ReviewsController {
                     .longitude(review.getStore().getLongitude())
                     .folderReviewId(folderReviewId)
                     .replyCnt(repliesService.countReplies(folderReviewId))
-//                    .favorCnt((Integer)map.get("favorCnt"))
-//                    .isFavor((Boolean) map.get("isFavor"))
                     .build()
             );
 
@@ -114,18 +114,10 @@ public class ReviewsController {
         favorsService.removeFavor(userId, folderReviewId);
         return "true";
     }
-//    @GetMapping("/api/reviews/review/{folderReviewId}")
-//    public ReplyFavorDTO getRelyFavorInfo(@PathVariable("folderReviewId") Integer folderReviewId){
-//        return ReplyFavorDTO
-//                .builder()
-//                .replyCnt(repliesService.countReplies(folderReviewId))
-//                .favorCnt(0)
-//                .build();
-//
-//    }
 
-//    @GetMapping("/api/test/{folderId}")
-//    public List<Reviews> test(@PathVariable("folderId") Integer folderId) {
-//        return reviewsService.test(folderId);
-//    }
+    @GetMapping("/api/reviews/replies/{folderId}/{reviewId}")
+    public List<ReplyDTO> repliesList (@UserIdFromJwt Integer loginId, @PathVariable Integer folderId, @PathVariable Integer reviewId){
+        return reviewsService.getReplies(loginId, folderId, reviewId);
+    }
+
 }

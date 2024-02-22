@@ -15,12 +15,7 @@ public class StatusResponseDto {
 
     private String accessToken;
 
-    private boolean tokenExpired;
-
-
-    public static StatusResponseDto success(){
-        return StatusResponseDto.builder().status(200).build();
-    }
+    private Boolean refreshTokenExpired;
 
 
 }

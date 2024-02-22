@@ -10,5 +10,7 @@ public interface FolderService {
     public List<FolderDTO> getFolderListByUserId (Boolean isFavor , Integer userId);
     public List<FolderDTO> getFolderListAllByUserId( Integer userId);
     public String updateFolderFavor(Map map);
+    public String createFolder(Map<String, String> map, Integer userId);
     public List<PartFolderDTO> getFolderListByUserId(Integer userId);
+
 }
