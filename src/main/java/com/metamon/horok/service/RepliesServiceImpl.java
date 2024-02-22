@@ -11,14 +11,20 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
+@Transactional
 @Service
 @RequiredArgsConstructor
-@Transactional
+
 public class RepliesServiceImpl implements RepliesService{
+
+    private final RepliesRepository repliesRepo;
     private final UsersRepository userRepo;
     private final FolderReviewsRepository folderReviewsRepo;
     private final RepliesRepository replyRepo;
-
+    
+    @Override
+    public int countReplies(int folderReviewId){
+        return repliesRepo.countRepliesByFolderIdAndReviewId(folderReviewId);
 
     @Override
     public String createReply(Integer userId, Integer folderReviewId, String replyContent) {

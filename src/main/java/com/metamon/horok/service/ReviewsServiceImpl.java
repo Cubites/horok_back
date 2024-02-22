@@ -12,7 +12,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
@@ -26,6 +25,7 @@ public class ReviewsServiceImpl implements ReviewsService{
     private final StoresRepository storeRepo;
     private final ReviewsRepository reviewRepo;
     private final FolderReviewsRepository folderReviewsRepo;
+
     private final RepliesRepository replyRepo;
 
     @Value("${upload.path}")
@@ -65,13 +65,13 @@ public class ReviewsServiceImpl implements ReviewsService{
                     //String imageData = images[i];
                     switch (i) {
                         case 0:
-                            reviewsBuilder.image1(filePath);
+                            reviewsBuilder.image1("/"+fileName);
                             break;
                         case 1:
-                            reviewsBuilder.image2(filePath);
+                            reviewsBuilder.image2("/"+fileName);
                             break;
                         case 2:
-                            reviewsBuilder.image3(filePath);
+                            reviewsBuilder.image3("/"+fileName);
                             break;
                     }
                 }
@@ -85,7 +85,6 @@ public class ReviewsServiceImpl implements ReviewsService{
         reviewRepo.save(reviews);
 
 
-        List<FolderReviews> folderReviews = new ArrayList<>();
         for(int i=0; i<foldersId.size(); i++){
 //            FolderReviews fr = FolderReviews.builder().folder(folderRepo.findById(foldersId.get(i)).get()).build();
             FolderReviews fr = FolderReviews.builder().folderId(foldersId.get(i)).reviewId(reviews.getReviewId()).build();
@@ -98,6 +97,10 @@ public class ReviewsServiceImpl implements ReviewsService{
     }
 
     @Override
+    public List<Reviews> findReviewInFolder(Integer folderId){
+        return reviewRepo.findReviewsWithFolder(folderId);
+    }
+
     public List<ReplyDTO> getReplies(Integer loginId,Integer folderId, Integer reviewId) {
         //폴더 리뷰 아이디 조회
         FolderReviews fr = folderReviewsRepo.findByFolderIdAndReviewId(folderId, reviewId);
