@@ -1,6 +1,5 @@
 package com.metamon.horok.config.javaconfig;
 
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.MethodParameter;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.support.WebDataBinderFactory;
@@ -10,9 +9,6 @@ import org.springframework.web.method.support.ModelAndViewContainer;
 
 @Component
 public class UserIdArgumentResolver implements HandlerMethodArgumentResolver {
-
-    @Value("${testuser.id}")
-    private Integer testUserId;
 
     @Override
     public boolean supportsParameter(MethodParameter parameter) {
@@ -30,7 +26,7 @@ public class UserIdArgumentResolver implements HandlerMethodArgumentResolver {
 
         // 지금은 그냥 user Id주자
         // 여기에 사용하려는 userId를 셋팅해주세요
-        Integer userIdInteger = testUserId;
+        Integer userIdInteger = Integer.valueOf("171");
 
         return userIdInteger;
     }

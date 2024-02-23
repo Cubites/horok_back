@@ -33,6 +33,31 @@ public class FolderServiceImpl implements FolderService {
     }
 
     @Override
+    public Boolean folderParticipation(Integer userId, Integer folderId) {
+        Users u = userRepo.findById(userId).orElse(null);
+        Folders f = folderRepo.findById(folderId).orElse(null);
+
+        Participants p = Participants.builder().folder(f).user(u).folderFavor(false).build();
+        Participants savedParticipant = partRepo.save(p);
+        if ( savedParticipant != null) {
+            return true;
+        } else {
+            return false;  // 저장 실패
+        }
+    }
+
+    @Override
+    public Boolean alreadyParticipated(Integer userId, Integer folderId) {
+        Participants p = partRepo. findByFolder_FolderIdAndUser_UserId(userId, folderId);
+        if(p == null){
+            return true;
+        }else {
+            return false;
+        }
+
+    }
+
+    @Override
     public List<FolderDTO> getFolderListByUserId(Boolean isFavor, Integer userId) {
         List<Object[]> list = folderRepo.findFolderListByUserIdAndFavor(userId, isFavor);
         List<FolderDTO> listDto = new ArrayList<>();
@@ -92,19 +117,18 @@ public class FolderServiceImpl implements FolderService {
 
     @Override
     @Transactional
-    public String createFolder(Map<String, String> map, Integer userId) {
+    public Participants createFolder(Map<String, String> map, Integer userId) {
         Users u = userRepo.findById(userId).orElse(null);
         Folders f = Folders.builder().folderName(map.get("folderName")).folderImg(map.get("folderImg")).build();
         Participants p = Participants.builder().folder(f).user(u).folderFavor(false).build();
         Folders savedFolder = folderRepo.save(f);
         Participants savedParticipant = partRepo.save(p);
-        if (savedFolder != null && savedParticipant != null) {
-            return "true";  // 저장 성공
-        } else {
-            return "false";  // 저장 실패
-        }
+//        if (savedFolder != null && savedParticipant != null) {
+//            return "true";  // 저장 성공
+//        } else {
+//            return "false";  // 저장 실패
+//        }
+        return savedParticipant;
     }
-
-
 }
 

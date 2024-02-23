@@ -121,7 +121,15 @@ public class JwtUtil {
                 .compact();
     }
 
-
+ public String generateInviteToken(Integer folderId){
+     long refreshExpiration = 1000L * 60L * 60L * 24L * 7; // 1주
+     return Jwts.builder()
+             .claim("folderId",folderId)
+             .issuedAt(new Date(System.currentTimeMillis()))
+             .expiration(new Date(System.currentTimeMillis()+refreshExpiration))
+             .signWith(secretKey)
+             .compact();
+ }
 
 
     public boolean isNotExpired(String token) throws JwtException {
@@ -165,5 +173,14 @@ public class JwtUtil {
                 .parseSignedClaims(token)
                 .getPayload()
                 .get("userId",Integer.class);
+    }
+
+    public Integer getFolderId(String token){
+        return Jwts.parser()
+                .verifyWith(secretKey)
+                .build()
+                .parseSignedClaims(token)
+                .getPayload()
+                .get("folderId",Integer.class);
     }
 }
