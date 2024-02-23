@@ -2,6 +2,7 @@ package com.metamon.horok.service;
 
 import com.metamon.horok.domain.Folders;
 import com.metamon.horok.domain.Participants;
+import com.metamon.horok.domain.Pays;
 import com.metamon.horok.domain.Users;
 import com.metamon.horok.dto.FolderDTO;
 import com.metamon.horok.repository.FolderRepository;
