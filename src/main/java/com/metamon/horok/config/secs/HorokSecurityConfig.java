@@ -19,7 +19,6 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 
-import java.util.Arrays;
 import java.util.Collections;
 
 @EnableWebSecurity
@@ -53,8 +52,8 @@ public class HorokSecurityConfig {
                         @Override
                         public CorsConfiguration getCorsConfiguration(HttpServletRequest request) {
                                 CorsConfiguration config = new CorsConfiguration();
-                                config.setAllowedOrigins(Arrays.asList("https://horok.link"));
-//                                config.setAllowedOriginPatterns(Collections.singletonList("*"));
+//                                config.setAllowedOrigins(Arrays.asList("https://horok.link"));
+                                config.setAllowedOriginPatterns(Collections.singletonList("*"));
                                 config.setAllowedMethods(Collections.singletonList("*"));
                                 config.setAllowCredentials(true);
                                 config.setAllowedHeaders(Collections.singletonList("*"));
