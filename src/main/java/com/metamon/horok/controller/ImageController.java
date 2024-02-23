@@ -17,9 +17,9 @@ public class ImageController {
 
     @GetMapping("/show/image")
     public ResponseEntity<?> returnImage(@RequestParam(name = "imageName") String imageName) {
-        System.out.println(path);
         Resource resource = new FileSystemResource(path + imageName);
         return new ResponseEntity<>(resource, HttpStatus.OK);
     }
 
 }
+
