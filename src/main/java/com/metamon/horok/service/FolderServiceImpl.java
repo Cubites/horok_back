@@ -47,11 +47,11 @@ public class FolderServiceImpl implements FolderService {
 
     @Override
     public Boolean alreadyParticipated(Integer userId, Integer folderId) {
-        Participants p = partRepo. findByFolder_FolderIdAndUser_UserId(userId, folderId);
-        if(p == null){
-            return true;
-        }else {
+정        Participants p = partRepo.findByFolder_FolderIdAndUser_UserId(folderId,userId);
+        if(p != null){
             return false;
+        }else {
+            return true;
         }
 
     }
