@@ -23,9 +23,9 @@ public class RepliesServiceImpl implements RepliesService{
     private final RepliesRepository replyRepo;
     
     @Override
-    public int countReplies(int folderReviewId){
+    public int countReplies(int folderReviewId) {
         return repliesRepo.countRepliesByFolderIdAndReviewId(folderReviewId);
-
+    }
     @Override
     public String createReply(Integer userId, Integer folderReviewId, String replyContent) {
         Users u = userRepo.findById(userId).orElse(null);

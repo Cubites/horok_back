@@ -74,7 +74,7 @@ public class ReviewsController {
         List<ReviewDTO> result = new ArrayList<>();
 
         for(Reviews review : reviewList){
-            int folderReviewId = frRepo.findByFolderIdAndReviewId(folderId, review.getReviewId());
+            int folderReviewId = frRepo.findFolderReviewIdByFolderIdAndReviewId(folderId, review.getReviewId());
 
             result.add(ReviewDTO
                     .builder()
