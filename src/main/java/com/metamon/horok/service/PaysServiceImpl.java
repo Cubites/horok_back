@@ -1,5 +1,6 @@
 package com.metamon.horok.service;
 
+import com.metamon.horok.domain.Pays;
 import com.metamon.horok.dto.PaysDTO;
 import com.metamon.horok.dto.SimplePayDTO;
 import com.metamon.horok.repository.CardsRepository;
@@ -63,5 +64,12 @@ public class PaysServiceImpl implements PaysService {
     @Override
     public void markAsWritten(Integer payId){
         payRepo.markAsWritten(payId);
+    }
+
+    @Override
+    @Transactional
+    public void setPayExpired() {
+        List<Pays> expiredPayList = payRepo.findExpiredPayList();
+        payRepo.setExpiredPayList(expiredPayList);
     }
 }
