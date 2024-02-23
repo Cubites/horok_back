@@ -2,11 +2,8 @@ package com.metamon.horok.domain;
 
 import jakarta.persistence.*;
 import lombok.*;
-import org.hibernate.annotations.JdbcTypeCode;
 
-import java.sql.Types;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -27,9 +24,7 @@ public class Reviews {
     private LocalDateTime payDate;
     private LocalDateTime reviewDate;
     private String image1;
-
     private String image2;
-
     private String image3;
 
     @ManyToOne
@@ -40,7 +35,7 @@ public class Reviews {
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "folder_id")
 
-    private List<FolderReviews> folderReviewsList = new ArrayList<>();
+    private List<FolderReviews> folderReviewsList;
 
     @ManyToOne
     @JoinColumn(name = "user_id")

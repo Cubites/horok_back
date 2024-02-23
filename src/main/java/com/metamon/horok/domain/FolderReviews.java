@@ -3,7 +3,6 @@ package com.metamon.horok.domain;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -25,8 +24,8 @@ public class FolderReviews {
     private Integer reviewId;
 
     @OneToMany(mappedBy = "folderReview")
-    private List<Favors> favorsList = new ArrayList<>();
+    private List<Favors> favorsList;
     @OneToMany(mappedBy = "folderReview")
-    private List<Replies> repliesList = new ArrayList<>();
+    private List<Replies> repliesList;
 
 }

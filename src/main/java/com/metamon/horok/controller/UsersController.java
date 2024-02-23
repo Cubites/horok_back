@@ -1,24 +1,19 @@
 package com.metamon.horok.controller;
 
 import com.metamon.horok.config.javaconfig.UserIdFromJwt;
-import com.metamon.horok.domain.Users;
-
 import com.metamon.horok.dto.UserDTO;
 import com.metamon.horok.mapper.MapMapper;
 import com.metamon.horok.repository.UsersRepository;
 import com.metamon.horok.service.UserService;
-
+import com.metamon.horok.vo.MapReviewVO;
 import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import com.metamon.horok.vo.MapReviewVO;
-
 import java.util.List;
 import java.util.Optional;
 
@@ -78,21 +73,11 @@ public class UsersController {
         return mapMapper.readAllReviewFromUserId(userId);
     }
 
-    // 통계 부분
-//    @GetMapping("/api/users/cards/status")
-//    public List<Object[]> getCardState(@UserIdFromJwt Integer userId) {
-//        return userService.findYearlyCardUsageByCategory(userId);
-//    }
-
     @GetMapping("/api/users/cards/status")
     public List<Object[]> getCardState(@UserIdFromJwt Integer userId,@RequestParam(name="cardNumber",required = false) List<String> cardNumber) {
         return userService.findMonthlyCardUsageByCategory(userId,cardNumber);
     }
 
-//    @GetMapping("/api/users/cards/status2")
-//    public List<Object[]> getCardYearState(@UserIdFromJwt Integer userId) {
-//        return userService.findYearlyCardUsageByCategory(userId);
-//    }
     @GetMapping("/api/users/cards/status2")
     public List<Object[]> getCardYearState(@UserIdFromJwt Integer userId,@RequestParam(name="cardNumber",required = false) List<String> cardNumber) {
         return userService.findYearlyCardUsageByCategory(userId,cardNumber);

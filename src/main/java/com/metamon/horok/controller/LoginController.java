@@ -1,15 +1,15 @@
 package com.metamon.horok.controller;
 
+import com.metamon.horok.config.FileStore;
 import com.metamon.horok.domain.UserLoginInfo;
 import com.metamon.horok.domain.Users;
 import com.metamon.horok.dto.SignUpUserDto;
-import com.metamon.horok.repository.UserLoginInfoRepository;
+import com.metamon.horok.dto.UploadImageDTO;
 import com.metamon.horok.repository.UsersRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -30,10 +30,10 @@ public class LoginController {
     public ResponseEntity<Map<String,String>> signUpUser(@ModelAttribute SignUpUserDto param) throws IOException {
             Users newUser=null;
             if(param.getProfile() != null) {
-                UploadImage uploadImage = fileStore.storeFile(param.getProfile());
+                UploadImageDTO uploadImageDTO = fileStore.storeFile(param.getProfile());
                newUser = Users.builder().userNickname(param.getNick())
                         .personalCode("1")
-                        .userProfile(uploadImage.getFullPath())
+                        .userProfile(uploadImageDTO.getFullPath())
                         .userRegdate(LocalDateTime.now())
                         .userLoginType(param.getProvider())
                         .agreement(param.getAgreement())
