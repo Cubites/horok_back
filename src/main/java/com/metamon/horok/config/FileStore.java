@@ -1,5 +1,6 @@
-package com.metamon.horok.controller;
+package com.metamon.horok.config;
 
+import com.metamon.horok.dto.UploadImageDTO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -18,10 +19,10 @@ public class FileStore {
     private String fileDir;
 
     // 이미지 여러개 저장
-    public List<UploadImage> storeFiles(List<MultipartFile> images) {
+    public List<UploadImageDTO> storeFiles(List<MultipartFile> images) {
 
         //UploadImage객체는 파일 오리지널 이름, 서버에 저장되는 파일명, 파일 풀 경로
-        List<UploadImage> list = new ArrayList<>();
+        List<UploadImageDTO> list = new ArrayList<>();
 
         //image 하나씩 storeFile 메서드로 넘김
         if(images != null) {
@@ -34,7 +35,7 @@ public class FileStore {
 
 
     //이미지 저장
-   public UploadImage storeFile(MultipartFile image) {
+   public UploadImageDTO storeFile(MultipartFile image) {
 
         if(image.isEmpty()) {
             return null;
@@ -53,7 +54,7 @@ public class FileStore {
         }
 
         //실제 파일을 저장 후 필요한 정보(파일이름,경로 등)만 담은 객체 리턴
-        return new UploadImage(originFileName,storeFileName,fullPath);
+        return new UploadImageDTO(originFileName,storeFileName,fullPath);
     }
 
     private String getFullPath(String storeFileName) {
