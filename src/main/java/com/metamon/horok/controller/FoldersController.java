@@ -62,7 +62,7 @@ public class FoldersController {
 
     @PostMapping("/api/folders/invite")
       public String folderInvite(@UserIdFromJwt Integer userId, @RequestBody Map<String,String> inviteToken){
-        String msg = null;
+        String msg = "expiration";
         //토큰에서 폴더 아이디 뽑기
 
         log.info("token {}",inviteToken);
@@ -70,11 +70,11 @@ public class FoldersController {
         Integer folderId = jwtUtil.getFolderId(inviteToken.get("inviteToken"));
 
         if(folderId > 0){
-            msg = "expiration";
-            if(folderService.alreadyParticipated(userId, folderId)){ //초대 가능
-                msg = "invited";
-                if(folderService.folderParticipation(userId, folderId)){ // 초대 성공
-                    msg = "invite success";
+            msg = "notExpiration"; //폴더 있음
+            if(folderService.alreadyParticipated(userId, folderId)){
+                msg = "invited"; //초대 가능
+                if(folderService.folderParticipation(userId, folderId)){
+                    msg = "invite success"; // 초대 성공
                 } //else 초대 실패
             } //else 이미 참가한 아이디
         }//else 폴더 없음
