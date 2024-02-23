@@ -28,4 +28,6 @@ public interface ParticipantsRepository extends JpaRepository<Participants,Integ
     /*@Query("select distinct(u) from Users u join fetch u.cardsList where u.userId = :userId")
     Users findByUserIdWithCards(@Param("userId") Integer userId);*/
 
+    Participants findByFolder_FolderIdAndUser_UserId(Integer folderId, Integer userId);
+
 }
