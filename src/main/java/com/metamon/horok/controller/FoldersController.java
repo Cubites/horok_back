@@ -2,7 +2,6 @@ package com.metamon.horok.controller;
 
 import com.metamon.horok.config.javaconfig.UserIdFromJwt;
 import com.metamon.horok.config.secs.oauth.horokjwt.JwtUtil;
-import com.metamon.horok.domain.Participants;
 import com.metamon.horok.dto.FolderDTO;
 import com.metamon.horok.dto.PartFolderDTO;
 import com.metamon.horok.service.FolderService;
@@ -44,7 +43,7 @@ public class FoldersController {
     }
 
     @PostMapping("/api/folders/make")
-    public Participants folderMake(@UserIdFromJwt Integer userId, @RequestBody Map<String, String> map){
+    public Integer folderMake(@UserIdFromJwt Integer userId, @RequestBody Map<String, String> map){
         System.out.println(map);
         return folderService.createFolder(map, userId);
     }
