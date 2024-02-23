@@ -62,7 +62,7 @@ public class HorokSecurityConfig {
                                 return config;
                         }
                 }));
-
+                http.csrf().disable();
                 http.authorizeHttpRequests((auth) ->
 
                 auth.requestMatchers("/", "/oauth2/**", "/login/**", "/token/**").permitAll()
