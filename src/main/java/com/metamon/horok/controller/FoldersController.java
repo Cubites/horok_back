@@ -6,14 +6,14 @@ import com.metamon.horok.dto.FolderDTO;
 import com.metamon.horok.dto.PartFolderDTO;
 import com.metamon.horok.service.FolderService;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.java.Log;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
 
 @RestController
-@Log
+@Slf4j
 @RequiredArgsConstructor
 public class FoldersController {
     private final JwtUtil jwtUtil;
@@ -50,9 +50,10 @@ public class FoldersController {
 
 
     @GetMapping("/api/folders/invite/{folderId}")
-    public String folderInvite(@PathVariable Integer folderId){
+    public String folderInvite(@PathVariable("folderId") Integer folderId){
         //토큰 발급
         String token = jwtUtil.generateInviteToken(folderId);
+        log.info("발급된 토큰 {}",token);
         //토큰에서 폴더 아이디 뽑기
         //Integer folderId2 = jwtUtil.getFolderId(token);
         // /login?redirect_uri=""
@@ -60,10 +61,13 @@ public class FoldersController {
     }
 
     @PostMapping("/api/folders/invite")
-      public String folderInvite(@UserIdFromJwt Integer userId, @RequestBody String inviteToken){
+      public String folderInvite(@UserIdFromJwt Integer userId, @RequestBody Map<String,String> inviteToken){
         String msg = null;
         //토큰에서 폴더 아이디 뽑기
-        Integer folderId = jwtUtil.getFolderId(inviteToken);
+
+        log.info("token {}",inviteToken);
+
+        Integer folderId = jwtUtil.getFolderId(inviteToken.get("inviteToken"));
 
         if(folderId > 0){
             msg = "expiration";
