@@ -9,8 +9,6 @@ public interface FavorsService {
 
     public Map<Integer,FavorDTO> getFavorsInfo(Integer userId, Integer folderId);
 
-    public List<FavorDTO> getFavorsInfo(Integer userId, Integer folderId);
-
     void addFavor(Integer userId, Integer folderReviewId);
 
     void removeFavor(Integer userId, Integer folderReviewId);
