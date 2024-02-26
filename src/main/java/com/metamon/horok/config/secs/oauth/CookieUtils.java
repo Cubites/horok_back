@@ -36,7 +36,7 @@ public class CookieUtils {
         cookie.setPath("/");
         cookie.setSecure(true);
         cookie.setHttpOnly(true);
-        //cookie.setDomain("horok.link");
+        cookie.setDomain("horok.link");
 //        cookie.setSecure(true);
 //        cookie.setDomain();
         cookie.setMaxAge(maxAge);
