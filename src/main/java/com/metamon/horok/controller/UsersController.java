@@ -38,6 +38,10 @@ public class UsersController {
     @GetMapping("/api/users/info")
     public Optional<UserDTO> userInfo( @UserIdFromJwt Integer userId,@CookieValue(value = "Authorization",required = false) String token){
         System.out.println("cookie = 아아아" + token);
+
+        System.out.println(" **********************************************");
+        System.out.println("userId = " + userId);
+        System.out.println(" **********************************************");
         return userService.getUserInfoByUserId(userId);
     }
 
