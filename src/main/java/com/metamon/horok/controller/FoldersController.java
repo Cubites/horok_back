@@ -18,10 +18,7 @@ import java.util.Map;
 public class FoldersController {
     private final JwtUtil jwtUtil;
     private final FolderService folderService;
-    //의존성 생성자 주입
-//    public FoldersController(FolderService folderService){
-//        this.folderService = folderService;
-//    }
+
     @GetMapping("/api/folders/user")
     public List<PartFolderDTO> folderList(@UserIdFromJwt Integer userId) {
         return folderService.getFolderListByUserId(userId);
@@ -29,7 +26,6 @@ public class FoldersController {
 
     @GetMapping("/api/folders/{is_favor}")
     public List<FolderDTO> folderList(@PathVariable("is_favor") Boolean is_favor, @UserIdFromJwt Integer userId){
-
         if(is_favor) {
             return folderService.getFolderListByUserId(is_favor, userId);
         }else {
@@ -44,7 +40,6 @@ public class FoldersController {
 
     @PostMapping("/api/folders/make")
     public Integer folderMake(@UserIdFromJwt Integer userId, @RequestBody Map<String, String> map){
-        System.out.println(map);
         return folderService.createFolder(map, userId);
     }
 
@@ -53,10 +48,6 @@ public class FoldersController {
     public String folderInvite(@PathVariable("folderId") Integer folderId){
         //토큰 발급
         String token = jwtUtil.generateInviteToken(folderId);
-        log.info("발급된 토큰 {}",token);
-        //토큰에서 폴더 아이디 뽑기
-        //Integer folderId2 = jwtUtil.getFolderId(token);
-        // /login?redirect_uri=""
        return token;
     }
 
@@ -64,9 +55,6 @@ public class FoldersController {
       public String folderInvite(@UserIdFromJwt Integer userId, @RequestBody Map<String,String> inviteToken){
         String msg = "expiration";
         //토큰에서 폴더 아이디 뽑기
-
-        log.info("token {}",inviteToken);
-
         Integer folderId = jwtUtil.getFolderId(inviteToken.get("inviteToken"));
 
         if(folderId > 0){

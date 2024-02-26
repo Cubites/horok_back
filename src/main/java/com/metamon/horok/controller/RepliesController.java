@@ -28,6 +28,4 @@ public class RepliesController {
     public String deleteReply(@PathVariable Integer replyId){
         return repliesService.deleteReplies(replyId);
     }
-
-
 }

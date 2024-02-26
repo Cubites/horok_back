@@ -116,7 +116,7 @@ public class ReviewsController {
     }
 
     @GetMapping("/api/reviews/replies/{folderId}/{reviewId}")
-    public List<ReplyDTO> repliesList (@UserIdFromJwt Integer loginId, @PathVariable Integer folderId, @PathVariable Integer reviewId){
+    public List<ReplyDTO> repliesList (@UserIdFromJwt Integer loginId, @PathVariable("folderId") Integer folderId, @PathVariable("reviewId") Integer reviewId){
         return reviewsService.getReplies(loginId, folderId, reviewId);
     }
 

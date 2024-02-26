@@ -124,7 +124,6 @@ public class ReviewsServiceImpl implements ReviewsService{
 
             dtoList.add(dto);
         }
-
         return dtoList;
     }
 }

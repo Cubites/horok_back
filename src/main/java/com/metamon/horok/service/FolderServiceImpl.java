@@ -62,20 +62,16 @@ public class FolderServiceImpl implements FolderService {
         List<FolderDTO> listDto = new ArrayList<>();
 
         list.stream().forEach(o->{
-//            System.out.println(o[0]+","+o[1]+","+o[2]+","+o[3]+","+o[4]);
             FolderDTO dto = new FolderDTO();
-            dto.setFolderId(((Number) o[0]).intValue()); //dto.setFolderId(((BigInteger)o[0]).intValue());
+            dto.setFolderId(((Number) o[0]).intValue());
             dto.setFolderName((String)o[1]);
             dto.setFolderImg((String)o[2]);
             dto.setFolderFavor((Boolean)o[3]);
-            dto.setFolderParticipants(((Number) o[4]).intValue());//dto.setFolderParticipants(((BigInteger)o[4]).intValue());
+            dto.setFolderParticipants(((Number) o[4]).intValue());
             dto.setFolderParticipantsId(((Number)o[5]).intValue());
             listDto.add(dto);
         });
-
-        //listDto.sort(Comparator.comparing(FolderDTO::getFolderName));
         return listDto;
-
     }
 
     @Override
@@ -84,20 +80,16 @@ public class FolderServiceImpl implements FolderService {
         List<FolderDTO> listDto = new ArrayList<>();
 
         list.stream().forEach(o->{
-//            System.out.println(o[0]+","+o[1]+","+o[2]+","+o[3]+","+o[4]);
             FolderDTO dto = new FolderDTO();
-            dto.setFolderId(((Number) o[0]).intValue()); //dto.setFolderId(((BigInteger)o[0]).intValue());
+            dto.setFolderId(((Number) o[0]).intValue());
             dto.setFolderName((String)o[1]);
             dto.setFolderImg((String)o[2]);
             dto.setFolderFavor((Boolean)o[3]);
-            dto.setFolderParticipants(((Number) o[4]).intValue());//dto.setFolderParticipants(((BigInteger)o[4]).intValue());
+            dto.setFolderParticipants(((Number) o[4]).intValue());
             dto.setFolderParticipantsId(((Number)o[5]).intValue());
             listDto.add(dto);
         });
-
-        //listDto.sort(Comparator.comparing(FolderDTO::getFolderName));
         return listDto;
-
     }
 
     @Override

@@ -20,11 +20,6 @@ public class FavorsController {
         this.favorsService = favorsService;
     }
 
-//    @GetMapping("/api/favors/test/{folderId}")
-//    public List<Object[]> testFavors(@PathVariable("folderId") Integer folderId){
-//        return favorsService.testFavor(folderId);
-//    }
-
     @GetMapping("/api/favors/{folderId}")
     public List<FavorDTO> getFavorsInfo(@PathVariable("folderId") Integer folderId, @UserIdFromJwt Integer userId){
         return favorsService.getFavorsInfo(userId, folderId);
