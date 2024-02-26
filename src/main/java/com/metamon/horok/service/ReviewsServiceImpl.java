@@ -2,6 +2,7 @@ package com.metamon.horok.service;
 
 import com.metamon.horok.domain.*;
 import com.metamon.horok.dto.ReplyDTO;
+import com.metamon.horok.dto.ReviewDTO;
 import com.metamon.horok.dto.WrittenReviewDTO;
 import com.metamon.horok.repository.*;
 import jakarta.transaction.Transactional;
@@ -53,7 +54,6 @@ public class ReviewsServiceImpl implements ReviewsService{
                 .reviewDate(dto.getReviewDate())
                 .user(user)
                 .store(store);
-        // .folderReviewsList(folderReviews);
 
         if(dto.getImages() != null){
             MultipartFile[] images = dto.getImages();
@@ -63,7 +63,7 @@ public class ReviewsServiceImpl implements ReviewsService{
                     String filePath = path + File.separator + fileName;
                     File dest = new File(filePath);
                     images[i].transferTo(dest);
-                    //String imageData = images[i];
+
                     switch (i) {
                         case 0:
                             reviewsBuilder.image1("/"+fileName);
@@ -87,14 +87,11 @@ public class ReviewsServiceImpl implements ReviewsService{
 
 
         for(int i=0; i<foldersId.size(); i++){
-//            FolderReviews fr = FolderReviews.builder().folder(folderRepo.findById(foldersId.get(i)).get()).build();
             FolderReviews fr = FolderReviews.builder().folderId(foldersId.get(i)).reviewId(reviews.getReviewId()).build();
 
-            //folderReviews.add(fr);
             folderReviewsRepo.save(fr);
         }
 
-//        reviewRepo.save(reviewsBuilder.folderReviewsList(folderReviews).build());
     }
 
     @Override
@@ -127,4 +124,65 @@ public class ReviewsServiceImpl implements ReviewsService{
 
         return dtoList;
     }
+
+    @Override
+    public List<ReviewDTO> getMyReviews(Integer userId) {
+        return reviewRepo.findReviewsByUserId(userId);
+    }
+
+    @Override
+    public void deleteReview(Integer reviewId) {
+        reviewRepo.deleteReveiw(reviewId);
+    }
+
+//    @Override
+//    public void updateReview(WrittenReviewDTO dto, Integer reviewId) throws IOException {
+//        // 수정할 리뷰를 찾습니다.
+//        Reviews review = reviewRepo.findById(reviewId).orElse(null);
+//        if (review == null) {
+//            throw new RuntimeException("리뷰를 찾을 수 없습니다.");
+//        }
+//
+//        // 이미지를 수정하거나 추가합니다.
+//        if (dto.getImages() != null) {
+//            MultipartFile[] images = dto.getImages();
+//            for (int i = 0; i < images.length; i++) {
+//                if (images[i] != null && !images[i].isEmpty()) {
+//                    String fileName = UUID.randomUUID().toString() + "_" + images[i].getOriginalFilename();
+//                    String filePath = path + File.separator + fileName;
+//                    File dest = new File(filePath);
+//                    images[i].transferTo(dest);
+//                    // 이미지가 새로 추가되거나 수정되었을 경우에만 이미지 경로를 업데이트합니다.
+//                    switch (i) {
+//                        case 0:
+//                            review.builder().image1("/" + fileName);
+//                            break;
+//                        case 1:
+//                            review.builder().image2("/" + fileName);
+//                            break;
+//                        case 2:
+//                            review.builder().image3("/" + fileName);
+//                            break;
+//                    }
+//                }
+//            }
+//        }
+//
+//        // 평점과 리뷰 내용을 업데이트합니다.
+//        review.builder().reviewScore(dto.getReviewScore()).reviewContent(dto.getReviewContent());
+//
+//        // 선택된 폴더를 업데이트합니다.
+//        List<Integer> foldersId = Arrays
+//                .stream(dto.getFoldersId().split(","))
+//                .map(Integer::parseInt)
+//                .collect(Collectors.toList());
+//        folderReviewsRepo.deleteByReviewId(dto.getReviewId()); // 기존의 폴더-리뷰 관계를 삭제합니다.
+//        for (int i = 0; i < foldersId.size(); i++) {
+//            FolderReviews fr = FolderReviews.builder().folderId(foldersId.get(i)).reviewId(dto.getReviewId()).build();
+//            folderReviewsRepo.save(fr);
+//        }
+//
+//        // 리뷰를 업데이트합니다.
+//        reviewRepo.save(review);
+//    }
 }

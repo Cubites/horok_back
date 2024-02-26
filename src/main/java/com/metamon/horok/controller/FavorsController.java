@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
+import java.util.Map;
 
 @RestController
 @Log
@@ -26,7 +26,7 @@ public class FavorsController {
 //    }
 
     @GetMapping("/api/favors/{folderId}")
-    public List<FavorDTO> getFavorsInfo(@PathVariable("folderId") Integer folderId, @UserIdFromJwt Integer userId){
+    public Map<Integer, FavorDTO> getFavorsInfo(@PathVariable("folderId") Integer folderId, @UserIdFromJwt Integer userId){
         return favorsService.getFavorsInfo(userId, folderId);
     }
 }

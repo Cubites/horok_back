@@ -25,7 +25,7 @@ public class RepliesController {
     }
 
     @DeleteMapping("/api/replies/{replyId}")
-    public String deleteReply(@PathVariable Integer replyId){
+    public String deleteReply(@PathVariable("replyId") Integer replyId){
         return repliesService.deleteReplies(replyId);
     }
 

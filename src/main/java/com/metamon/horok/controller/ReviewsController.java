@@ -8,6 +8,7 @@ import com.metamon.horok.dto.ReplyDTO;
 import com.metamon.horok.dto.WrittenReviewDTO;
 import com.metamon.horok.repository.FolderReviewsRepository;
 import com.metamon.horok.service.FavorsService;
+import com.metamon.horok.service.FolderReviewsService;
 import com.metamon.horok.service.RepliesService;
 import com.metamon.horok.service.ReviewsService;
 import jakarta.transaction.Transactional;
@@ -30,13 +31,17 @@ public class ReviewsController {
     private final RepliesService repliesService;
     private final FavorsService favorsService;
     private final FolderReviewsRepository frRepo;
+    private final FolderReviewsService frService;
 
 
-    public ReviewsController(ReviewsService reviewsService, FolderReviewsRepository frRepo, RepliesService repliesService, FavorsService favorsService){
+    public ReviewsController(ReviewsService reviewsService, FolderReviewsRepository frRepo,
+                             RepliesService repliesService, FavorsService favorsService,
+                             FolderReviewsService frService){
         this.reviewsService = reviewsService;
         this.repliesService = repliesService;
         this.favorsService = favorsService;
         this.frRepo = frRepo;
+        this.frService = frService;
     }
     @PostMapping("/api/reviews/write")
     public String writeReview(@RequestParam(name = "images", required = false) MultipartFile[] images,
@@ -116,8 +121,36 @@ public class ReviewsController {
     }
 
     @GetMapping("/api/reviews/replies/{folderId}/{reviewId}")
-    public List<ReplyDTO> repliesList (@UserIdFromJwt Integer loginId, @PathVariable Integer folderId, @PathVariable Integer reviewId){
+    public List<ReplyDTO> repliesList (@UserIdFromJwt Integer loginId, @PathVariable("folderId") Integer folderId, @PathVariable("reviewId") Integer reviewId){
         return reviewsService.getReplies(loginId, folderId, reviewId);
     }
 
+    @GetMapping("/api/reviews/myreview")
+    public List<ReviewDTO> getMyReviews(@UserIdFromJwt Integer userId){
+        return reviewsService.getMyReviews(userId);
+    }
+
+    @DeleteMapping("/api/reviews/{reviewId}")
+    public void deleteReview(@PathVariable("reviewId") Integer reviewId){
+
+        // 공유된 리뷰에 달린 댓글 삭제
+        repliesService.deleteRepliesByReviewId(reviewId);
+        // 공유된 리뷰에 달린 좋아요 삭제
+        favorsService.deleteFavorByReviewId(reviewId);
+
+        // 리뷰 삭제
+        reviewsService.deleteReview(reviewId);
+        // 공유된 리뷰 삭제
+        frService.deleteFolderReviewByReviewId(reviewId);
+
+    }
+
+//    @DeleteMapping("/api/reviews/test/{reviewId}")
+//    public void deleteReplies(@PathVariable("reviewId") Integer reviewId){
+//
+//        // 공유된 리뷰에 달린 댓글 삭제
+//        repliesService.deleteRepliesByReviewId(reviewId);
+//        // 공유된 리뷰에 달린 좋아요 삭제
+//        //favorsService.deleteFavorByReviewId(reviewId);
+//    }
 }

@@ -52,4 +52,9 @@ public class RepliesServiceImpl implements RepliesService{
             return "false";
         }
     }
+
+    @Override
+    public void deleteRepliesByReviewId(Integer reviewId) {
+        replyRepo.deleteRepliesByReviewId(reviewId);
+    }
 }
