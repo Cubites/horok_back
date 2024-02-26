@@ -28,26 +28,26 @@ public class LoginController {
 
     @PostMapping("/login/signup")
     public ResponseEntity<Map<String,String>> signUpUser(@ModelAttribute SignUpUserDto param) throws IOException {
-            Users newUser=null;
-            if(param.getProfile() != null) {
-                UploadImageDTO uploadImageDTO = fileStore.storeFile(param.getProfile());
-               newUser = Users.builder().userNickname(param.getNick())
-                        .personalCode("1")
-                        .userProfile(uploadImageDTO.getFullPath())
-                        .userRegdate(LocalDateTime.now())
-                        .userLoginType(param.getProvider())
-                        .agreement(param.getAgreement())
-                        .build();
-            }else {
-                log.info("여기 도착");
-                log.info("param {}",param);
-                newUser = Users.builder().userNickname(param.getNick())
-                        .personalCode("1")
-                        .userRegdate(LocalDateTime.now())
-                        .userLoginType(param.getProvider())
-                        .agreement(param.getAgreement())
-                        .build();
-            }
+        Users newUser=null;
+        if(param.getProfile() != null) {
+            UploadImageDTO uploadImageDTO = fileStore.storeFile(param.getProfile());
+            newUser = Users.builder().userNickname(param.getNick())
+                    .personalCode("1")
+                    .userProfile(uploadImageDTO.getFullPath())
+                    .userRegdate(LocalDateTime.now())
+                    .userLoginType(param.getProvider())
+                    .agreement(param.getAgreement())
+                    .build();
+        }else {
+
+            log.info("param {}",param);
+            newUser = Users.builder().userNickname(param.getNick())
+                    .personalCode("1")
+                    .userRegdate(LocalDateTime.now())
+                    .userLoginType(param.getProvider())
+                    .agreement(param.getAgreement())
+                    .build();
+        }
         UserLoginInfo loginInfo = UserLoginInfo.builder().userLoginProvider(param.getProvider()).
                 userLoginEmail(param.getEmail()).userLoginRole("USER").build();
 
