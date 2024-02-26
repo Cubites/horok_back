@@ -45,7 +45,7 @@ public class JwtTokenAuthFilters extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         String authroization = null;
 
-
+        String authorization2 = request.getHeader("Authorization");
 
         Cookie[] cookies = request.getCookies();
 
@@ -53,6 +53,7 @@ public class JwtTokenAuthFilters extends OncePerRequestFilter {
 
         System.out.println("cookies = " + cookies);
         System.out.println("cookies = " + Arrays.toString(cookies));
+        System.out.println("authorization2 = " + authorization2);
         System.out.println("*****************************************");
 
         if(cookies != null) {
