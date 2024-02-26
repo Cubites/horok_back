@@ -30,17 +30,13 @@ public class UserServiceImple implements UserService {
     @Value("${upload.path}")
     private String path;
 
+    //사용자 정보 조회 + 카드리스트 조회
     @Override
     public Optional<UserDTO> getUserInfoByUserId(Integer userId) {
         Optional<Users> userOptional = userRepo.findById(userId);
 
         return userOptional.map(user -> {
             UserDTO userDTO = new UserDTO();
-
-            // 마이페이지 닉네임, 프로필 출력
-            userDTO.setUserId(user.getUserId());
-            userDTO.setUserNickname(user.getUserNickname());
-            userDTO.setUserProfile(user.getUserProfile());
 
             // 마이페이지 카드 리스트 출력
             userDTO.setCardsList(
@@ -59,7 +55,7 @@ public class UserServiceImple implements UserService {
         userRepo.updateUserNickname(userDTO.getUserNickname(), userDTO.getUserId());
     }
   
-    // 이미지 업로드
+    //프로필 이미지 수정
     @Override
     public void updateUserProfile(MultipartFile userProfile, Integer userId) throws IOException {
         String fileName = UUID.randomUUID().toString() + "_" + userProfile.getOriginalFilename(); 
@@ -69,12 +65,13 @@ public class UserServiceImple implements UserService {
         userRepo.updateUserProfile(fileName, userId);
     }
 
+    //월간 통계
     @Override
-
     public List<Object[]> findMonthlyCardUsageByCategory(Integer userId,List<String> cardNumber) {
         return userRepo.findMonthlyCardUsageByCategory(userId,cardNumber);
     }
-  
+
+    //연간 통계
     @Override
     public List<Object[]> findYearlyCardUsageByCategory(Integer userId,List<String> cardNumber) {
         return userRepo.findYearlyCardUsageByCategory(userId,cardNumber);

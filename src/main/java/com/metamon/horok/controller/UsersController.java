@@ -45,7 +45,7 @@ public class UsersController {
         return userService.getUserInfoByUserId(testId);
     }
 
-    // 마이페이지에 닉네임 출력 , 이미지 출력 , 카드 리스트 출력
+    // 마이페이지에 닉네임 출력 , 이미지 출력 , 카드 리스트 출력 ( 사용자 정보 조회 컨트롤러 )
     @GetMapping("/api/users")
     public Optional<UserDTO> UserInfo(@UserIdFromJwt Integer userId) {
         return userService.getUserInfoByUserId(userId);
@@ -73,11 +73,13 @@ public class UsersController {
         return mapMapper.readAllReviewFromUserId(userId);
     }
 
+    //월간 통계 컨트롤러
     @GetMapping("/api/users/cards/status")
     public List<Object[]> getCardState(@UserIdFromJwt Integer userId,@RequestParam(name="cardNumber",required = false) List<String> cardNumber) {
         return userService.findMonthlyCardUsageByCategory(userId,cardNumber);
     }
 
+    //연간 통계 컨트롤러
     @GetMapping("/api/users/cards/status2")
     public List<Object[]> getCardYearState(@UserIdFromJwt Integer userId,@RequestParam(name="cardNumber",required = false) List<String> cardNumber) {
         return userService.findYearlyCardUsageByCategory(userId,cardNumber);
