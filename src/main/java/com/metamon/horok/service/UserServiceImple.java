@@ -38,6 +38,11 @@ public class UserServiceImple implements UserService {
         return userOptional.map(user -> {
             UserDTO userDTO = new UserDTO();
 
+            // 마이페이지 닉네임, 프로필 출력
+            userDTO.setUserId(user.getUserId());
+            userDTO.setUserNickname(user.getUserNickname());
+            userDTO.setUserProfile(user.getUserProfile());
+
             // 마이페이지 카드 리스트 출력
             userDTO.setCardsList(
                     user.getCardsList().stream()
