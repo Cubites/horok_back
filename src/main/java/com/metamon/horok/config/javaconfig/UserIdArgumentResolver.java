@@ -44,7 +44,9 @@ public class UserIdArgumentResolver implements HandlerMethodArgumentResolver {
 
         String token = cookie.getValue();
         Integer userId = jwtUtil.getUserId(token);
-
+        System.out.println(" **********************************************");
+        System.out.println("userId = " + userId);
+        System.out.println(" **********************************************");
         return userId;
     }
 }
