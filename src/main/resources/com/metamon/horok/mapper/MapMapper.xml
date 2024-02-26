@@ -26,6 +26,7 @@
             SELECT
                 r1.review_id
                 , r1.store_id
+                , r1.user_id
                 , u1.user_nickname
                 , r1.image1
                 , r1.review_score
@@ -37,5 +38,26 @@
         JOIN stores s ON r.store_id = s.store_id
         WHERE u.user_id = #{user_id}
         GROUP BY r.review_id
+        UNION
+        SELECT
+            r.review_id AS reviewId
+            , s.store_id AS storeId
+            , 0 AS folderId
+            , u.user_nickname AS userNickname
+            , '내 폴더' AS folderName
+            , 'folder-263CFF' AS folderImg
+            , s.store_name AS storeName
+            , s.store_category AS storeCategory
+            , s.store_addr AS storeAddr
+            , s.latitude
+            , s.longitude
+            , r.image1
+            , r.review_score AS reviewScore
+            , r.review_content AS reviewContent
+            , r.pay_date AS payDate
+        FROM users u
+        JOIN reviews r ON u.user_id = r.user_id
+        JOIN stores s ON r.store_id = s.store_id
+        WHERE u.user_id = #{user_id}
     </select>
 </mapper>

@@ -1,6 +1,7 @@
 package com.metamon.horok.config.secs.oauth.horokjwt;
 
 import com.metamon.horok.domain.TokenInfo;
+import com.metamon.horok.domain.TokenInfoRedis;
 import com.metamon.horok.repository.TokenInfoRepository;
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
@@ -19,7 +20,7 @@ import java.util.Date;
 @Slf4j
 public class JwtUtil {
 
-    private final TokenInfoRepository tokenInfoRepository;
+
     private final RefreshTokenService tokenService;
     private SecretKey secretKey;
     @Value("${spring.jwt.secret}")
@@ -31,17 +32,7 @@ public class JwtUtil {
         secretKey = new SecretKeySpec(sign.getBytes(StandardCharsets.UTF_8), Jwts.SIG.HS256.key().build().getAlgorithm());
     }
 
-    public GeneratedToken generatedToken(String email, String role,String provider){
-        // refreshToken And accessToken 쌍으로 생성
-        String refreshToken = generteRefreshToken(email,role);
-        String accessToken = generateAccessToken(email, role);
 
-        //token을 Mysql에 저장
-        tokenSave(refreshToken,accessToken,email,provider);
-
-        return new GeneratedToken(accessToken,refreshToken);
-
-    }
     public GeneratedToken generatedTokenWithUserId(String email, String role,String provider,Integer userId){
         // refreshToken And accessToken 쌍으로 생성
         String refreshToken = generateRefreshTokenWithId(email,role,userId);
@@ -55,47 +46,28 @@ public class JwtUtil {
     }
 
     private void tokenSave(String refreshToken, String accessToken, String email,String provider) {
-        TokenInfo tokenInfo = TokenInfo.builder()
-                .refreshToken(refreshToken)
+//        TokenInfo tokenInfo = TokenInfo.builder()
+//                .refreshToken(refreshToken)
+//                .accessToken(accessToken)
+//                .provider(provider)
+//                .email(email)
+//                .build();
+
+        TokenInfoRedis tokenInfo =TokenInfoRedis.builder()
                 .accessToken(accessToken)
-                .provider(provider)
+                .refreshToken(refreshToken)
                 .email(email)
+                .provider(provider)
                 .build();
-        tokenService.saveNewLoginToken(tokenInfo);
+        //tokenService.saveNewLoginToken(tokenInfo);
+        tokenService.saveNewLoginTokenInRedis(tokenInfo);
 //        tokenInfoRepository.save(tokenInfo);
     }
-
-    public String generteRefreshToken(String email, String role){
-        //토큰의 유효 기간을 설정
-        long refreshExpiration = 1000L * 60L * 60L * 24L * 7; // 1주
-
-        return Jwts.builder()
-                .claim("email",email)
-                .claim("role",role)
-                .issuedAt(new Date(System.currentTimeMillis()))
-                .expiration(new Date(System.currentTimeMillis()+refreshExpiration))
-                .signWith(secretKey)
-                .compact();
-    }
-
-    public String generateAccessToken(String email,String role){
-        long tokenPeriod = 1000L * 60L * 30L; //30분
-        //long tokenPeriod = 1000L * 60L * 1L; //test용 1분
-
-        return Jwts.builder()
-                .claim("email",email)
-                .claim("role",role)
-                .issuedAt(new Date(System.currentTimeMillis()))
-                .expiration(new Date(System.currentTimeMillis()+tokenPeriod))
-                .signWith(secretKey)
-                .compact();
-    }
-
 
     public String generateRefreshTokenWithId (String email, String role,Integer userId){
         //토큰의 유효 기간을 설정
         long refreshExpiration = 1000L * 60L * 60L * 24L * 7; // 1주
-        //ong refreshExpiration  = 1000L * 60L * 1L; //test용 1분
+        //long refreshExpiration  = 1000L * 60L * 1L; //test용 1분
 
         return Jwts.builder()
                 .claim("email",email)
@@ -166,4 +138,26 @@ public class JwtUtil {
                 .getPayload()
                 .get("userId",Integer.class);
     }
+
+
+    public String generateInviteToken(Integer folderId){
+        long refreshExpiration = 1000L * 60L * 60L * 24L * 7; // 1주
+        return Jwts.builder()
+                .claim("folderId",folderId)
+                .issuedAt(new Date(System.currentTimeMillis()))
+                .expiration(new Date(System.currentTimeMillis()+refreshExpiration))
+                .signWith(secretKey)
+                .compact();
+    }
+
+    public Integer getFolderId(String token){
+        return Jwts.parser()
+                .verifyWith(secretKey)
+                .build()
+                .parseSignedClaims(token)
+                .getPayload()
+                .get("folderId",Integer.class);
+    }
+
+
 }

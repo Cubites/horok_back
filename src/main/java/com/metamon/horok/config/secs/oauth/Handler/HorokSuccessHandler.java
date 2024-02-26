@@ -30,7 +30,7 @@ public class HorokSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
     private final HttpCookieOAuth2AuthorizationRequestRepository httpCookieOAuth2AuthorizationRequestRepository;
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
-        log.info("여기 온것이여");
+
         // OAuth2User로 캐스팅하여 인증된 사용자 정보를 가져온다.
         OAuth2User oAuth2User = (OAuth2User) authentication.getPrincipal();
         // 사용자 이메일을 가져온다.

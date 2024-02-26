@@ -3,7 +3,6 @@ package com.metamon.horok.domain;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -23,12 +22,10 @@ public class Folders {
 
     @OneToMany
     @JoinColumn(name = "folder_id")
-    private List<FolderReviews> folderList = new ArrayList<>();
+    private List<FolderReviews> folderList;
 
-    //floder가 생성될 때 participants도 같이 생성될 수 있음으로, cascade옵션 추가
+    // floder가 생성될 때 participants도 같이 생성될 수 있음으로, cascade옵션 추가
     @OneToMany(mappedBy = "folder",cascade = CascadeType.ALL)
-    private List<Participants> participantsList = new ArrayList<>();
+    private List<Participants> participantsList;
 
-    /* 연관관계 편의 메서드
-    * */
 }

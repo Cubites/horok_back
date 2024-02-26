@@ -25,14 +25,13 @@ public class TokenController {
     @PostMapping("/token/logout")
     public ResponseEntity<StatusResponseDto> logout2(@CookieValue("Authorization") String accessToken, HttpServletRequest request, HttpServletResponse response) {
 
-        // 엑세스 토큰으로 현재 Redis 정보 삭제 / 지금은 DB에서 지우자
-        refreshTokenService.deleteToken(accessToken);
+        // 엑세스 토큰으로 현재 Redis 정보 삭제
+        //refreshTokenService.deleteToken(accessToken);
+        refreshTokenService.deleteTokenRedis(accessToken);
         CookieUtils.deleteCookie(request,response,"Authorization");
         return ResponseEntity.ok(StatusResponseDto.builder().status(200).build());
     }
 
 
 
-    }
-
-
+}

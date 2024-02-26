@@ -3,7 +3,6 @@ package com.metamon.horok.domain;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -14,6 +13,7 @@ import java.util.List;
 @NoArgsConstructor
 @Builder
 public class Stores {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer storeId;
@@ -25,5 +25,6 @@ public class Stores {
 
     @OneToMany
     @JoinColumn(name = "store_id")
-    private List<Pays> payList = new ArrayList<>();
+    private List<Pays> payList;
+
 }

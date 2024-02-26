@@ -52,6 +52,7 @@ public class HorokSecurityConfig {
                         @Override
                         public CorsConfiguration getCorsConfiguration(HttpServletRequest request) {
                                 CorsConfiguration config = new CorsConfiguration();
+//                                config.setAllowedOrigins(Arrays.asList("https://horok.link"));
                                 config.setAllowedOriginPatterns(Collections.singletonList("*"));
                                 config.setAllowedMethods(Collections.singletonList("*"));
                                 config.setAllowCredentials(true);
@@ -59,7 +60,7 @@ public class HorokSecurityConfig {
                                 return config;
                         }
                 }));
-
+//                http.csrf().disable();
                 http.authorizeHttpRequests((auth) ->
 
                 auth.requestMatchers("/", "/oauth2/**", "/login/**", "/token/**").permitAll()

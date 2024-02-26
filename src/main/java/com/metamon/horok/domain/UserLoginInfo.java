@@ -28,5 +28,4 @@ public class UserLoginInfo {
         this.user = user;
     }
 
-
 }

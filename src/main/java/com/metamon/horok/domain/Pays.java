@@ -26,9 +26,9 @@ public class Pays {
     private Boolean isWritten;
     @Column(columnDefinition = "TINYINT(4)")
     private Boolean expiration;
-    private String storeName; //혹시 몰라 안지움
-    private String storeCategory;//혹시 몰라 안지움
-    private String payAddr;//혹시 몰라 안지움
+    private String storeName;
+    private String storeCategory;
+    private String payAddr;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="card_number")

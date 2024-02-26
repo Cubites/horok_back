@@ -2,6 +2,7 @@ package com.metamon.horok.config.secs.oauth.horokjwt;
 
 import com.metamon.horok.config.secs.oauth.CookieUtils;
 import com.metamon.horok.domain.TokenInfo;
+import com.metamon.horok.domain.TokenInfoRedis;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.JwtException;
 import io.micrometer.common.util.StringUtils;
@@ -112,9 +113,17 @@ public class JwtTokenAuthFilters extends OncePerRequestFilter {
     private String tokenRefresh(HttpServletRequest request, HttpServletResponse response) {
 
         // 액세스 토큰으로 Refresh 토큰 객체를 조회
-
         String expiredToken = CookieUtils.getCookie(request, "Authorization").get().getValue();
-        TokenInfo tokenInfo = refreshTokenService.findRefreshToken(expiredToken);
+
+        // TokenInfo tokenInfo = refreshTokenService.findRefreshToken(expiredToken);
+        TokenInfoRedis tokenInfo = refreshTokenService.findRefreshTokenInRedis(expiredToken);
+
+        //accToken으로 refresh 토큰 자체 접근 불가시 만료라고 생각.. 다시 로그인하라고 하자
+        // 혹은 아예 토큰 정보가 없음 (이미 삭제된 토큰)
+        if(tokenInfo == null){
+            return REFRESH_EXPIRED;
+        }
+
         String refreshToken = tokenInfo.getRefreshToken();
         try {
 
@@ -124,11 +133,12 @@ public class JwtTokenAuthFilters extends OncePerRequestFilter {
                 String email = jwtUtil.getEmail(refreshToken);
                 String role = jwtUtil.getRole(refreshToken);
                 Integer userId = jwtUtil.getUserId(refreshToken);
-
-
                 String newAccessToken = jwtUtil.generateAccessTokenWithId(email, role, userId);
+
+
                 // 액세스 토큰의 값을 수정해준다.
-                refreshTokenService.updateAccessToken(expiredToken, newAccessToken);
+                // refreshTokenService.updateAccessToken(expiredToken, newAccessToken);
+                refreshTokenService.updateAccessTokenInRedis(expiredToken,newAccessToken);
 
                 CookieUtils.deleteCookie(request, response, "Authorization");
                 CookieUtils.addCookie(response,"Authorization", newAccessToken, 1000 * 60 * 40);
