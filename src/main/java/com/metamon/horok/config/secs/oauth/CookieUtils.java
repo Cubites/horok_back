@@ -34,17 +34,19 @@ public class CookieUtils {
         return cookie;
     }
     public static void addCookie(HttpServletResponse response, String name, String value, int maxAge) {
-        Cookie cookie = new Cookie(name, value);
-        cookie.setPath("/");
-        //cookie.setSecure(true);
-        cookie.setHttpOnly(true);
-       //cookie.setDomain("horok.link");
-//        cookie.setSecure(true);
-//        cookie.setDomain();
-        cookie.setMaxAge(maxAge);
-        response.addCookie(cookie);
+//        Cookie cookie = new Cookie(name, value);
+//        cookie.setPath("/");
+//        //cookie.setSecure(true);
+//        cookie.setHttpOnly(true);
+//       //cookie.setDomain("horok.link");
+////        cookie.setSecure(true);
+////        cookie.setDomain();
+//        cookie.setMaxAge(maxAge);
+//        response.addCookie(cookie);
 
-        ResponseCookie none = ResponseCookie.from(name, value).path("/").maxAge(maxAge).sameSite("None").secure(true).httpOnly(true).build();
+        ResponseCookie none = ResponseCookie.from(name, value).path("/").maxAge(maxAge).sameSite("None")
+                .secure(true).httpOnly(true).domain("horok.link").
+                build();
         response.addHeader("Set-Cookie",none.toString());
 
         //response.setHeader("Set-Cookie",cookie.getName()+":"+cookie.getValue()+"; Secure;SameSite:None");
