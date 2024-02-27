@@ -33,10 +33,11 @@ public class UserIdArgumentResolver implements HandlerMethodArgumentResolver {
     @Override
     public Object resolveArgument(MethodParameter parameter, ModelAndViewContainer mavContainer,
             NativeWebRequest webRequest, WebDataBinderFactory binderFactory) throws Exception {
-//        // 추후에 여기서 값 꺼내서 줄 것
-//         AuthUserDto principal =
-//         (AuthUserDto) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-//        HttpServletRequest request = (HttpServletRequest)webRequest.getNativeRequest();
+
+
+//
+//          추후에 여기서 값 꺼내서 줄 것
+           HttpServletRequest request = (HttpServletRequest)webRequest.getNativeRequest();
 //        Optional<Cookie> authorization = CookieUtils.getCookie(request, "Authorization");
 //        Cookie cookie = authorization.orElse(null);
         // 지금은 그냥 user Id주자
@@ -45,6 +46,17 @@ public class UserIdArgumentResolver implements HandlerMethodArgumentResolver {
        // String token = cookie.getValue();
         //Integer userId = jwtUtil.getUserId(token);
 
+        // 쿠키 없을 때 처리 해야함
+
+        Cookie[] cookies = request.getCookies();
+        if(cookies != null) {
+            for (Cookie cookie : cookies) {
+                System.out.println("************************************");
+                System.out.println("cookie = " + cookie.getName());
+                System.out.println("cookie.getValue() = " + cookie.getValue());
+                System.out.println("************************************");
+            }
+        }
         return 171;
     }
 }
