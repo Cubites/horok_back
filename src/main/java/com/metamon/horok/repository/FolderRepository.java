@@ -2,6 +2,7 @@ package com.metamon.horok.repository;
 
 import com.metamon.horok.domain.Folders;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
@@ -18,5 +19,10 @@ public interface FolderRepository extends JpaRepository<Folders,Integer> {
     //all folder list
     @Query("select f.folderId,  f.folderName, f.folderImg, p.folderFavor, (SELECT COUNT(p2.folderParticipantsId) From Participants p2 WHERE p2.folder.folderId = p.folder.folderId ) AS parti, p.folderParticipantsId from Folders f join FETCH Participants p on f.folderId = p.folder.folderId where p.user.userId = :userId order by f.folderName")
     List<Object[]> findFolderListByUserId(@Param("userId") Integer userId);
+
+
+    @Modifying
+    @Query("update Folders set folderName = :folderName, folderImg =:folderImg where folderId = :folderId")
+    int updateFolderInfo(@Param("folderName") String folderName, @Param("folderImg") String folderImg, @Param("folderId") Integer folderId);
 
 }
