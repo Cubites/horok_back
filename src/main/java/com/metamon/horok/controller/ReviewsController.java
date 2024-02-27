@@ -69,7 +69,7 @@ public class ReviewsController {
                 .userId(userId)
                 .credit(credit).build();
 
-        reviewsService.writeReview(reviewDTO);
+        reviewsService.writeReview(reviewDTO, userId);
 
         return "true";
     }

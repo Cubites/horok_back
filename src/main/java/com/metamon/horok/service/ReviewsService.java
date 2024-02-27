@@ -9,7 +9,7 @@ import java.io.IOException;
 import java.util.List;
 
 public interface ReviewsService {
-    public void writeReview(WrittenReviewDTO dto) throws IOException;
+    public void writeReview(WrittenReviewDTO dto, Integer userId) throws IOException;
     public List<Reviews> findReviewInFolder(Integer folderId);
     public List<ReplyDTO> getReplies(Integer loginId, Integer folderId, Integer reviewId);
 

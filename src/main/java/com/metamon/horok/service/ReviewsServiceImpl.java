@@ -34,9 +34,9 @@ public class ReviewsServiceImpl implements ReviewsService{
     private String path;
 
     @Override
-    public void writeReview(WrittenReviewDTO dto) throws IOException {
+    public void writeReview(WrittenReviewDTO dto, Integer userId) throws IOException {
 
-        Users user = userRepo.findById(171).orElse(null);
+        Users user = userRepo.findById(userId).orElse(null);
         Stores store = storeRepo.findById(dto.getStoreId()).orElse(null);
 
         List<Integer> foldersId = Arrays
