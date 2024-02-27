@@ -34,6 +34,7 @@ public class UsersController {
         this.userService = userService;
     }
 
+    // 마이페이지에 닉네임 출력 , 이미지 출력 , 카드 리스트 출력 ( 사용자 정보 조회 컨트롤러 )
     @GetMapping("/api/users/info")
     public Optional<UserDTO> userInfo( @UserIdFromJwt Integer userId){
         return userService.getUserInfoByUserId(userId);
@@ -45,11 +46,6 @@ public class UsersController {
         return userService.getUserInfoByUserId(testId);
     }
 
-    // 마이페이지에 닉네임 출력 , 이미지 출력 , 카드 리스트 출력 ( 사용자 정보 조회 컨트롤러 )
-    @GetMapping("/api/users")
-    public Optional<UserDTO> UserInfo(@UserIdFromJwt Integer userId) {
-        return userService.getUserInfoByUserId(userId);
-    }
 
     // 닉네임 수정 201 페이지로 보냄 : HttpStatus.CREATED
     @PostMapping("/api/users/nickname")
