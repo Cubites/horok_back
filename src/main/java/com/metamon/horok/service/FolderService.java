@@ -1,5 +1,6 @@
 package com.metamon.horok.service;
 
+import com.metamon.horok.domain.Folders;
 import com.metamon.horok.dto.FolderDTO;
 import com.metamon.horok.dto.PartFolderDTO;
 
@@ -16,4 +17,5 @@ public interface FolderService {
     public Boolean alreadyParticipated(Integer userId, Integer folderId);
     public String deleteFolder(Integer userId, Integer folderId);
     public Integer updateFolder(Map<String, String> map);
+    Folders getFolderInfo(Integer folderId);
 }
