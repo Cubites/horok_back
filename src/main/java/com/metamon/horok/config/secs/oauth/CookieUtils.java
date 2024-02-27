@@ -3,8 +3,10 @@ package com.metamon.horok.config.secs.oauth;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.http.ResponseCookie;
 import org.springframework.util.SerializationUtils;
 
+import java.net.ResponseCache;
 import java.util.Base64;
 import java.util.Optional;
 
@@ -34,11 +36,19 @@ public class CookieUtils {
     public static void addCookie(HttpServletResponse response, String name, String value, int maxAge) {
         Cookie cookie = new Cookie(name, value);
         cookie.setPath("/");
-       
+        //cookie.setSecure(true);
+        cookie.setHttpOnly(true);
+       //cookie.setDomain("horok.link");
 //        cookie.setSecure(true);
 //        cookie.setDomain();
         cookie.setMaxAge(maxAge);
         response.addCookie(cookie);
+
+        ResponseCookie none = ResponseCookie.from(name, value).path("/").maxAge(maxAge).sameSite("None").secure(true).httpOnly(true).build();
+        response.addHeader("Set-Cookie",none.toString());
+
+        //response.setHeader("Set-Cookie",cookie.getName()+":"+cookie.getValue()+"; Secure;SameSite:None");
+
     }
     public static void deleteCookie(HttpServletRequest request, HttpServletResponse response, String name) {
         Cookie[] cookies = request.getCookies();
