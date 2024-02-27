@@ -47,7 +47,7 @@ public class UserIdArgumentResolver implements HandlerMethodArgumentResolver {
         //Integer userId = jwtUtil.getUserId(token);
 
         // 쿠키 없을 때 처리 해야함
-
+        System.out.println("************************************");
         Cookie[] cookies = request.getCookies();
         if(cookies != null) {
             for (Cookie cookie : cookies) {
@@ -57,6 +57,7 @@ public class UserIdArgumentResolver implements HandlerMethodArgumentResolver {
                 System.out.println("************************************");
             }
         }
+        System.out.println("************************************");
         return 171;
     }
 }
