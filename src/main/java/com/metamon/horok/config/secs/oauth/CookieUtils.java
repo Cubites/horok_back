@@ -58,10 +58,16 @@ public class CookieUtils {
             for (Cookie cookie: cookies) {
                 if (cookie.getName().equals(name)) {
                     System.out.println(" 여기 작동함 이러면 cookie.setValue 설정을 바꿔야함");
-                    cookie.setValue("");
-                    cookie.setPath("/");
-                    cookie.setMaxAge(0);
-                    response.addCookie(cookie);
+                    ResponseCookie responseCookie = ResponseCookie.from(name,"")
+                            .path("/")
+                            .maxAge(0)
+                            .sameSite("None")
+                            .secure(true)
+                            .httpOnly(true)
+                            .domain("horok.link")
+                            .build();
+
+                    response.addHeader("Set-Cookie",responseCookie.toString());
                 }
             }
         }
