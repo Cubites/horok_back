@@ -6,7 +6,6 @@ import com.metamon.horok.mapper.MapMapper;
 import com.metamon.horok.repository.UsersRepository;
 import com.metamon.horok.service.UserService;
 import com.metamon.horok.vo.MapReviewVO;
-import jakarta.servlet.http.Cookie;
 import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -41,12 +40,6 @@ public class UsersController {
 
 
         return userService.getUserInfoByUserId(userId);
-    }
-
-    @PostMapping("/api/users/info")
-    public Optional<UserDTO> userInfo2() {
-        int testId = 171;
-        return userService.getUserInfoByUserId(testId);
     }
 
     // 닉네임 수정 201 페이지로 보냄 : HttpStatus.CREATED
