@@ -17,6 +17,7 @@ public class CookieUtils {
         if(cookies != null && cookies.length >0){
             for(Cookie cookie : cookies){
                 if(cookie.getName().equals(name)){
+                    System.out.println(" **********************쿠키 있음" );
                     return Optional.of(cookie);
                 }
             }
