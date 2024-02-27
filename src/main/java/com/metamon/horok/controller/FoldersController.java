@@ -2,6 +2,7 @@ package com.metamon.horok.controller;
 
 import com.metamon.horok.config.javaconfig.UserIdFromJwt;
 import com.metamon.horok.config.secs.oauth.horokjwt.JwtUtil;
+import com.metamon.horok.domain.Folders;
 import com.metamon.horok.dto.FolderDTO;
 import com.metamon.horok.dto.PartFolderDTO;
 import com.metamon.horok.service.FolderService;
@@ -9,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -74,11 +76,17 @@ public class FoldersController {
         return folderService.deleteFolder(userId, folderId);
     }
 
-    @PatchMapping("/api/folders")
-    public Integer folders(@RequestBody Map<String, String> map){
+    @PatchMapping("/api/folders/update")
+    public Integer foldersUpdate(@RequestBody Map<String, String> map){
         return folderService.updateFolder(map);
     }
 
-
-
+    @GetMapping("/api/folders/edit/{folderId}")
+    public Map<String, String> folderInfo(@PathVariable("folderId")Integer folderId){
+        Map<String, String> map = new HashMap<>();
+        Folders folders= folderService.getFolderInfo(folderId);
+        map.put("folderName",folders.getFolderName());
+        map.put("folderImg", folders.getFolderImg());
+        return map;
+    }
 }

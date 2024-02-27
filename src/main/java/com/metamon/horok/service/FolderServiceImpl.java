@@ -81,7 +81,12 @@ public class FolderServiceImpl implements FolderService {
 
     @Override
     public Integer updateFolder(Map<String, String>  map) {
-        return folderRepo.updateFolderInfo(map.get("folderName"), map.get("folderImg"), Integer.parseInt( map.get("folderId")));
+        return folderRepo.updateFolderInfo(map.get("folderName"), map.get("folderImg"), Integer.parseInt(String.valueOf(map.get("folderId"))));
+    }
+
+    @Override
+    public Folders getFolderInfo(Integer folderId) {
+        return folderRepo.findById(folderId).orElse(null);
     }
 
     @Override
