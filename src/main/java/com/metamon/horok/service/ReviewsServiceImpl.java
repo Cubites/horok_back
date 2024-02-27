@@ -41,6 +41,7 @@ public class ReviewsServiceImpl implements ReviewsService{
 
         List<Integer> foldersId = Arrays
                 .stream(dto.getFoldersId().split(","))
+                .filter(val->{return !"".equals(val);})
                 .map(Integer::parseInt)
                 .collect(Collectors.toList());
 
@@ -176,6 +177,7 @@ public class ReviewsServiceImpl implements ReviewsService{
         // 선택된 폴더를 업데이트합니다.
         List<Integer> foldersId = Arrays
                 .stream(dto.getFoldersId().split(","))
+                .filter(val->{return !"".equals(val);})
                 .map(Integer::parseInt)
                 .collect(Collectors.toList());
 
