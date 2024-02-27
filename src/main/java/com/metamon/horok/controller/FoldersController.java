@@ -69,6 +69,10 @@ public class FoldersController {
         return msg;
     }
 
-
+    @GetMapping("/api/folders/notshared/{reviewId}")
+    public List<FolderDTO> getNotSharedFolderList(@UserIdFromJwt Integer userId, @PathVariable("reviewId") Integer reviewId){
+        System.out.println(userId);
+        return folderService.findFolderIdsByUserIdAndReviewIdNotShared(userId, reviewId);
+    }
 
 }

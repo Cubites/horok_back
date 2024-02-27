@@ -26,8 +26,8 @@ public class Participants {
 
 
     /*
-    * 연관관계 편의 메서드
-    * */
+     * 연관관계 편의 메서드
+     * */
 
     public void setFoldersAndUsers(Folders folder, Users user){
         this.folder = folder;

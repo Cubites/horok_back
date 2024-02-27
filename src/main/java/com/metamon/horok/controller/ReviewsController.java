@@ -44,7 +44,8 @@ public class ReviewsController {
         this.frService = frService;
     }
     @PostMapping("/api/reviews/write")
-    public String writeReview(@RequestParam(name = "images", required = false) MultipartFile[] images,
+    public String writeReview(@UserIdFromJwt Integer userId,
+                            @RequestParam(name = "images", required = false) MultipartFile[] images,
                             @RequestParam("storeName") String storeName,
                             @RequestParam("payDate") String payDate,
                             @RequestParam("credit") int credit,
@@ -65,7 +66,7 @@ public class ReviewsController {
                 .reviewScore(reviewScore)
                 .foldersId(folders)
                 .images(images)
-                .userId(171)
+                .userId(userId)
                 .credit(credit).build();
 
         reviewsService.writeReview(reviewDTO);
@@ -145,12 +146,28 @@ public class ReviewsController {
 
     }
 
-//    @DeleteMapping("/api/reviews/test/{reviewId}")
-//    public void deleteReplies(@PathVariable("reviewId") Integer reviewId){
-//
-//        // 공유된 리뷰에 달린 댓글 삭제
-//        repliesService.deleteRepliesByReviewId(reviewId);
-//        // 공유된 리뷰에 달린 좋아요 삭제
-//        //favorsService.deleteFavorByReviewId(reviewId);
-//    }
+    // 리뷰 수정
+    @PostMapping("/api/reviews/edit")
+    public String editReview(@RequestParam(name = "images", required = false) MultipartFile[] images,
+                      @RequestParam("reviewId") Integer reviewId,
+                      @RequestParam("reviewScore") double reviewScore,
+                      @RequestParam("reviewContent") String reviewContent,
+                      @RequestParam("folders") String folders) throws IOException{
+
+        WrittenReviewDTO reviewDTO = WrittenReviewDTO.builder()
+                .reviewContent(reviewContent)
+                .reviewScore(reviewScore)
+                .foldersId(folders)
+                .images(images).build();
+
+        reviewsService.updateReview(reviewDTO, reviewId);
+
+        return "true";
+    }
+
+    @GetMapping("/api/reviews/edit/{reviewId}")
+    public ReviewDTO getEditReview(@PathVariable("reviewId") Integer reviewId){
+        return reviewsService.getEditReview(reviewId);
+    }
+
 }

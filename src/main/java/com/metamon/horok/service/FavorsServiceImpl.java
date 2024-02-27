@@ -28,18 +28,6 @@ public class FavorsServiceImpl implements FavorsService{
         List<Object[]> cntList = favorsRepo.countFavorsByFolderIdGroupByFolderReviewId(folderId);
         List<Object[]> checkList = favorsRepo.checkIfUserLikedReview(userId, folderId);
 
-//        System.out.println(cntList.size());
-//        for(Object[] a : cntList){
-//            for(Object o : a){
-//                System.out.print(o);
-//            }
-//        }
-//        System.out.println(checkList.size());
-//        for(Object[] a : checkList){
-//            for(Object o : a){
-//                System.out.print(o);
-//            }
-//        }
         Map<Integer,FavorDTO> favorsMap = new HashMap<>();
         for(int i=0; i<checkList.size(); i++){
             FavorDTO dto = FavorDTO.builder()
@@ -55,15 +43,6 @@ public class FavorsServiceImpl implements FavorsService{
         return favorsMap;
     }
 
-//    @Override
-//    public List<Object[]> testFavor(Integer folderId) {
-//        return favorsRepo.countFavorsByFolderIdGroupByFolderReviewId(folderId);
-//    }
-
-//    @Override
-//    public List<Object[]> testFavor2(Integer userId, Integer folderId) {
-//        return favorsRepo.checkIfUserLikedReview(userId, folderId);
-//    }
 
     @Override
     public void addFavor(Integer userId, Integer folderReviewId) {

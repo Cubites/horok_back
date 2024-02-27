@@ -56,4 +56,9 @@ public class Reviews {
     public void setImage3(String image3) {
         this.image3 = image3;
     }
+
+    public void setReviewScore(double score){this.reviewScore = score;}
+
+    public void setReviewContent(String reviewContent){this.reviewContent = reviewContent;}
+
 }
