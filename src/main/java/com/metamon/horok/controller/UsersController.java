@@ -54,6 +54,9 @@ public class UsersController {
     // 마이페이지에 닉네임 출력 , 이미지 출력 , 카드 리스트 출력 ( 사용자 정보 조회 컨트롤러 )
     @GetMapping("/api/users")
     public Optional<UserDTO> UserInfo(@UserIdFromJwt Integer userId) {
+
+
+
         return userService.getUserInfoByUserId(userId);
     }
 

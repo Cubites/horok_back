@@ -2,10 +2,7 @@ package com.metamon.horok.domain;
 
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
+import lombok.*;
 
 import java.util.List;
 
@@ -16,7 +13,7 @@ import java.util.List;
 @Table(name = "cards")
 @EqualsAndHashCode(of="cardNumber")
 @AllArgsConstructor
-
+@NoArgsConstructor
 public class Cards{
 
     @Id
@@ -35,6 +32,6 @@ public class Cards{
         return innerBuilder().cardNumber(cardNumber);
     }
     //jpa
-    protected Cards(){ }
+
 
 }

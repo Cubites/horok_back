@@ -38,7 +38,7 @@ public class LoginController {
             UploadImageDTO uploadImageDTO = fileStore.storeFile(param.getProfile());
             newUser = Users.builder().userNickname(param.getNick())
                     .personalCode("1")
-                    .userProfile(uploadImageDTO.getFullPath())
+                    .userProfile(uploadImageDTO.getStoreFileName())
                     .userRegdate(LocalDateTime.now())
                     .userLoginType(param.getProvider())
                     .agreement(param.getAgreement())
@@ -47,7 +47,7 @@ public class LoginController {
 
             log.info("param {}",param);
             newUser = Users.builder().userNickname(param.getNick())
-                    .userProfile(fileDir+"/profile.png")
+                    .userProfile("profile.png")
                     .personalCode("1")
                     .userRegdate(LocalDateTime.now())
                     .userLoginType(param.getProvider())
