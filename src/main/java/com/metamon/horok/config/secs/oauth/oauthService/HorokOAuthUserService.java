@@ -42,7 +42,7 @@ public class HorokOAuthUserService implements OAuth2UserService<OAuth2UserReques
         //기본 userService에서 가져온 유저 정보를 기반으로 OAuth2Attribute 객체를 만든다
         Oauth2Attribute oauth2Attribute = Oauth2Attribute.of(registrationId,userNameAttributeName,oAuth2User.getAttributes());
 
-        log.info("info {}",oAuth2User.getAttributes());
+
         //파싱한 값들 중 필요 정보를 담은 Map임
         Map<String, Object> memberAttribute = oauth2Attribute.convertToMap();
 

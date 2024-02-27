@@ -68,7 +68,7 @@ public class UsersController {
     @PostMapping("/api/users/profile")
     public ResponseEntity<Integer> UserInfoUpdate2(@RequestParam("userProfile") MultipartFile userProfile,
             @RequestParam(name = "userId") Integer userId) throws IOException {
-        System.out.println("--------" + userId);
+
         userService.updateUserProfile(userProfile, userId);
         return new ResponseEntity<>(userId, HttpStatus.CREATED);
     }

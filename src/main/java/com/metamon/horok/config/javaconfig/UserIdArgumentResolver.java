@@ -35,29 +35,22 @@ public class UserIdArgumentResolver implements HandlerMethodArgumentResolver {
             NativeWebRequest webRequest, WebDataBinderFactory binderFactory) throws Exception {
 
 
-//
-//          추후에 여기서 값 꺼내서 줄 것
-           HttpServletRequest request = (HttpServletRequest)webRequest.getNativeRequest();
-//        Optional<Cookie> authorization = CookieUtils.getCookie(request, "Authorization");
-//        Cookie cookie = authorization.orElse(null);
-        // 지금은 그냥 user Id주자
-        // 여기에 사용하려는 userId를 셋팅해주세요
 
-       // String token = cookie.getValue();
-        //Integer userId = jwtUtil.getUserId(token);
+        HttpServletRequest request = (HttpServletRequest)webRequest.getNativeRequest();
+
 
         // 쿠키 없을 때 처리 해야함
-        System.out.println("************************************");
-        Cookie[] cookies = request.getCookies();
-        if(cookies != null) {
-            for (Cookie cookie : cookies) {
-                System.out.println("************************************");
-                System.out.println("cookie = " + cookie.getName());
-                System.out.println("cookie.getValue() = " + cookie.getValue());
-                System.out.println("************************************");
-            }
+
+
+        Optional<Cookie> authorization = CookieUtils.getCookie(request, "Authorization");
+        Cookie cookie = authorization.orElse(null);
+        if(cookie != null){
+            String value = cookie.getValue();
+            Integer userId = jwtUtil.getUserId(value);
+            return userId;
+        }else{
+            //어차피 미인증 사용자는 필터에서 막힌다.
+            return 12345;
         }
-        System.out.println("************************************");
-        return 171;
     }
 }
