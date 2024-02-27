@@ -40,4 +40,21 @@ public interface ReviewsRepository extends JpaRepository<Reviews, Integer> {
     @Modifying
     @Query(value = "DELETE FROM reviews WHERE review_id = :reviewId", nativeQuery = true)
     void deleteReveiw(@Param("reviewId") Integer reviewId);
+
+
+    //리뷰 수정을 위한 조회
+    @Query("select " +
+            "new com.metamon.horok.dto.ReviewDTO(" +
+            "r.reviewId as reviewId, " +
+            "r.reviewScore as reviewScore, " +
+            "r.reviewContent as reviewContent, " +
+            "r.credit as credit, " +
+            "r.payDate as payDate, " +
+            "r.reviewDate as reviewDate, " +
+            "r.image1 as image1, " +
+            "r.image2 as image2, " +
+            "r.image3 as image3, " +
+            "r.store.storeName as storeName) " +
+            "from Reviews r where r.reviewId = :reviewId")
+    ReviewDTO findByReviewIdWithStore(@Param("reviewId") Integer reviewId);
 }

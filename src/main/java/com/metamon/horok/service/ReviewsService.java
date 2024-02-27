@@ -17,5 +17,7 @@ public interface ReviewsService {
 
     public void deleteReview(Integer reviewId);
 
-//    public void updateReview(WrittenReviewDTO dto, Integer reviewId) throws IOException;
+    public void updateReview(WrittenReviewDTO dto, Integer reviewId) throws IOException;
+
+    public ReviewDTO getEditReview(Integer reviewId);
 }

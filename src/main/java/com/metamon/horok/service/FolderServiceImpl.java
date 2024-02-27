@@ -150,5 +150,10 @@ public class FolderServiceImpl implements FolderService {
 
         return savedParticipant.getFolder().getFolderId();
     }
+
+    @Override
+    public List<FolderDTO> findFolderIdsByUserIdAndReviewIdNotShared(Integer userId, Integer reviewId){
+        return folderRepo.findFolderIdsByUserIdAndReviewIdNotShared(userId, reviewId);
+    }
 }
 

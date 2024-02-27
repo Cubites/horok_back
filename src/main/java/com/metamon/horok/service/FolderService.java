@@ -15,6 +15,8 @@ public interface FolderService {
     public List<PartFolderDTO> getFolderListByUserId(Integer userId);
     public Boolean folderParticipation(Integer userId, Integer folderId);
     public Boolean alreadyParticipated(Integer userId, Integer folderId);
+    public List<FolderDTO> findFolderIdsByUserIdAndReviewIdNotShared(Integer userId, Integer reviewId);
+
     public String deleteFolder(Integer userId, Integer folderId);
     public Integer updateFolder(Map<String, String> map);
     Folders getFolderInfo(Integer folderId);
