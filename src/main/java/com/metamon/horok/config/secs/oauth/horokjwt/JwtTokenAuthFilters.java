@@ -21,6 +21,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -34,16 +35,16 @@ public class JwtTokenAuthFilters extends OncePerRequestFilter {
     private final RefreshTokenService refreshTokenService;
 
 
-    @Override
-    protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
 
-        return request.getRequestURI().contains("/token/refresh") || request.getRequestURI().contains("/login/page");
-    }
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         String authroization = null;
+
+
         Cookie[] cookies = request.getCookies();
+        String authorization22 = request.getHeader("Authorization");
+
 
 
         if(cookies != null) {

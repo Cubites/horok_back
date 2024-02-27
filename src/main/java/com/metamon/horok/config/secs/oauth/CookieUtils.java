@@ -3,8 +3,10 @@ package com.metamon.horok.config.secs.oauth;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.http.ResponseCookie;
 import org.springframework.util.SerializationUtils;
 
+import java.net.ResponseCache;
 import java.util.Base64;
 import java.util.Optional;
 
@@ -15,6 +17,7 @@ public class CookieUtils {
         if(cookies != null && cookies.length >0){
             for(Cookie cookie : cookies){
                 if(cookie.getName().equals(name)){
+                    System.out.println(" **********************쿠키 있음" );
                     return Optional.of(cookie);
                 }
             }
@@ -32,21 +35,32 @@ public class CookieUtils {
         return cookie;
     }
     public static void addCookie(HttpServletResponse response, String name, String value, int maxAge) {
-        Cookie cookie = new Cookie(name, value);
-        cookie.setPath("/");
-        cookie.setHttpOnly(true);
-        cookie.setMaxAge(maxAge);
-        response.addCookie(cookie);
+
+
+        ResponseCookie none = ResponseCookie.from(name, value).path("/").maxAge(maxAge).sameSite("None")
+                .secure(true).httpOnly(true).domain("horok.link").
+                build();
+        response.addHeader("Set-Cookie",none.toString());
+
+
+
     }
     public static void deleteCookie(HttpServletRequest request, HttpServletResponse response, String name) {
         Cookie[] cookies = request.getCookies();
         if (cookies != null && cookies.length > 0) {
             for (Cookie cookie: cookies) {
                 if (cookie.getName().equals(name)) {
-                    cookie.setValue("");
-                    cookie.setPath("/");
-                    cookie.setMaxAge(0);
-                    response.addCookie(cookie);
+                    System.out.println(" 여기 작동함 이러면 cookie.setValue 설정을 바꿔야함");
+                    ResponseCookie responseCookie = ResponseCookie.from(name,"")
+                            .path("/")
+                            .maxAge(0)
+                            .sameSite("None")
+                            .secure(true)
+                            .httpOnly(true)
+                            .domain("horok.link")
+                            .build();
+
+                    response.addHeader("Set-Cookie",responseCookie.toString());
                 }
             }
         }

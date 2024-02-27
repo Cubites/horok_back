@@ -23,6 +23,9 @@ public class RestAuthenticationEntryPoint implements AuthenticationEntryPoint {
     @Override
     public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws IOException, ServletException {
 
+
+
+
         StatusResponseDto build = StatusResponseDto
                 .builder().status(401).msg("로그인이 필요한 페이지 입니다.").build();
 

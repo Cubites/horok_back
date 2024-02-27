@@ -19,4 +19,6 @@ public interface ParticipantsRepository extends JpaRepository<Participants,Integ
 
     Participants findByFolder_FolderIdAndUser_UserId(Integer folderId, Integer userId);
 
+    void deleteByUser_UserIdAndFolder_FolderId(Integer userId, Integer folderId);
+
 }

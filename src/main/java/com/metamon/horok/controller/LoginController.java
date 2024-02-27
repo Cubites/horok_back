@@ -8,6 +8,7 @@ import com.metamon.horok.dto.UploadImageDTO;
 import com.metamon.horok.repository.UsersRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -26,6 +27,10 @@ public class LoginController {
     private final FileStore fileStore;
     private final UsersRepository usersRepository;
 
+    @Value("${upload.path}")
+    private String fileDir;
+
+
     @PostMapping("/login/signup")
     public ResponseEntity<Map<String,String>> signUpUser(@ModelAttribute SignUpUserDto param) throws IOException {
         Users newUser=null;
@@ -33,7 +38,7 @@ public class LoginController {
             UploadImageDTO uploadImageDTO = fileStore.storeFile(param.getProfile());
             newUser = Users.builder().userNickname(param.getNick())
                     .personalCode("1")
-                    .userProfile(uploadImageDTO.getFullPath())
+                    .userProfile(uploadImageDTO.getStoreFileName())
                     .userRegdate(LocalDateTime.now())
                     .userLoginType(param.getProvider())
                     .agreement(param.getAgreement())
@@ -42,6 +47,7 @@ public class LoginController {
 
             log.info("param {}",param);
             newUser = Users.builder().userNickname(param.getNick())
+                    .userProfile("profile.png")
                     .personalCode("1")
                     .userRegdate(LocalDateTime.now())
                     .userLoginType(param.getProvider())

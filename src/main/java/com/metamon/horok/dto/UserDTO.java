@@ -15,5 +15,6 @@ public class UserDTO {
     private Integer userReviewCnt;
     private Integer userFolderCnt;
 
+    //카드 리스트
     private List<CardDTO> cardsList;
 }

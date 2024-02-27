@@ -15,6 +15,7 @@ public interface UsersRepository extends JpaRepository<Users, Integer> {
 
     Users findByUserNickname(String nickname);
 
+    //사용자 정보 조회
     @Query("select u from Users u join fetch u.cardsList where u.userId =: id")
     Users findByUserWithcards(@Param("id") Integer usersId);
 
@@ -23,21 +24,12 @@ public interface UsersRepository extends JpaRepository<Users, Integer> {
     @Query("update Users set userNickname = :userNickname where userId = :userId")
     int updateUserNickname(@Param("userNickname") String userNickname, @Param("userId") Integer userId);
 
-    // 프로필 수정
+    // 프로필 이미지 수정
     @Modifying
     @Query("update Users set userProfile = :userProfile where userId = :userId")
     void updateUserProfile(@Param("userProfile") String userProfile, @Param("userId") Integer userId);
 
-    //이번달 카테고리별 사용내역
-//    @Query(("SELECT p.storeCategory, SUM(p.credit) " +
-//            "FROM Users u " +
-//            "JOIN u.cardsList c " +
-//            "JOIN c.payList p " +
-//            "WHERE u.userId = :userId " +
-//            "AND YEAR(p.payDate) = YEAR(CURRENT_DATE()) " +
-//            "AND MONTH(p.payDate) = MONTH(CURRENT_DATE()) " +
-//            "GROUP BY p.storeCategory"))
-//    List<Object[]> findMonthlyCardUsageByCategory(@Param("userId") Integer userId);
+    //이번달 카테고리별 사용내역 통계
     @Query(("SELECT p.storeCategory, SUM(p.credit) " +
             "FROM Users u " +
             "JOIN u.cardsList c " +
@@ -49,16 +41,7 @@ public interface UsersRepository extends JpaRepository<Users, Integer> {
             "GROUP BY p.storeCategory"))
     List<Object[]> findMonthlyCardUsageByCategory(@Param("userId") Integer userId, @Param("cardNumber") List<String> cardNumber);
 
-    //해당연도 카테고리별 사용내역
-//    @Query("SELECT p.storeCategory, SUM(p.credit) " +
-//            "FROM Users u " +
-//            "JOIN u.cardsList c " +
-//            "JOIN c.payList p " +
-//            "WHERE u.userId = :userId " +
-//            "AND YEAR(p.payDate) = YEAR(CURRENT_DATE()) " +
-//            "GROUP BY p.storeCategory")
-//    List<Object[]> findYearlyCardUsageByCategory(@Param("userId") Integer userId);
-
+    //해당연도 카테고리별 사용내역 통계
         @Query("SELECT p.storeCategory, SUM(p.credit) " +
             "FROM Users u " +
             "JOIN u.cardsList c " +

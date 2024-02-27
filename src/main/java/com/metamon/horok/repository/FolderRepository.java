@@ -3,6 +3,7 @@ package com.metamon.horok.repository;
 import com.metamon.horok.domain.Folders;
 import com.metamon.horok.dto.FolderDTO;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
@@ -30,5 +31,9 @@ public interface FolderRepository extends JpaRepository<Folders,Integer> {
             @Param("userId") Integer userId,
             @Param("reviewId") Integer reviewId
     );
+
+    @Modifying
+    @Query("update Folders set folderName = :folderName, folderImg =:folderImg where folderId = :folderId")
+    int updateFolderInfo(@Param("folderName") String folderName, @Param("folderImg") String folderImg, @Param("folderId") Integer folderId);
 
 }

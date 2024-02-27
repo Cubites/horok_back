@@ -6,6 +6,7 @@ import com.metamon.horok.mapper.MapMapper;
 import com.metamon.horok.repository.UsersRepository;
 import com.metamon.horok.service.UserService;
 import com.metamon.horok.vo.MapReviewVO;
+import jakarta.servlet.http.Cookie;
 import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -34,8 +35,11 @@ public class UsersController {
         this.userService = userService;
     }
 
+    // 마이페이지에 닉네임 출력 , 이미지 출력 , 카드 리스트 출력 ( 사용자 정보 조회 컨트롤러 )
     @GetMapping("/api/users/info")
     public Optional<UserDTO> userInfo( @UserIdFromJwt Integer userId){
+
+
         return userService.getUserInfoByUserId(userId);
     }
 
@@ -43,12 +47,6 @@ public class UsersController {
     public Optional<UserDTO> userInfo2() {
         int testId = 171;
         return userService.getUserInfoByUserId(testId);
-    }
-
-    // 마이페이지에 닉네임 출력 , 이미지 출력 , 카드 리스트 출력
-    @GetMapping("/api/users")
-    public Optional<UserDTO> UserInfo(@UserIdFromJwt Integer userId) {
-        return userService.getUserInfoByUserId(userId);
     }
 
     // 닉네임 수정 201 페이지로 보냄 : HttpStatus.CREATED
@@ -62,7 +60,7 @@ public class UsersController {
     @PostMapping("/api/users/profile")
     public ResponseEntity<Integer> UserInfoUpdate2(@RequestParam("userProfile") MultipartFile userProfile,
             @RequestParam(name = "userId") Integer userId) throws IOException {
-        System.out.println("--------" + userId);
+
         userService.updateUserProfile(userProfile, userId);
         return new ResponseEntity<>(userId, HttpStatus.CREATED);
     }
@@ -73,11 +71,13 @@ public class UsersController {
         return mapMapper.readAllReviewFromUserId(userId);
     }
 
+    //월간 통계 컨트롤러
     @GetMapping("/api/users/cards/status")
     public List<Object[]> getCardState(@UserIdFromJwt Integer userId,@RequestParam(name="cardNumber",required = false) List<String> cardNumber) {
         return userService.findMonthlyCardUsageByCategory(userId,cardNumber);
     }
 
+    //연간 통계 컨트롤러
     @GetMapping("/api/users/cards/status2")
     public List<Object[]> getCardYearState(@UserIdFromJwt Integer userId,@RequestParam(name="cardNumber",required = false) List<String> cardNumber) {
         return userService.findYearlyCardUsageByCategory(userId,cardNumber);
