@@ -26,6 +26,11 @@ public class HorokAuthenticationFailureHandler extends SimpleUrlAuthenticationFa
 
     @Override
     public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception) throws IOException, ServletException {
+        System.out.println(" ************************************************ ");
+        System.out.println(" failure Handler ");
+        System.out.println(" ************************************************ ");
+
+
         String targetUrl = CookieUtils.getCookie(request, HttpCookieOAuth2AuthorizationRequestRepository.REDIRECT_URI_PARAM_COOKIE_NAME)
                 .map(Cookie::getValue)
                 .orElse(("/"));

@@ -61,11 +61,15 @@ public class HorokSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
             Integer userId = oAuth2User.getAttribute("userId");
             GeneratedToken token = jwtUtil.generatedTokenWithUserId(email,role,provider,userId);
 
-
+            System.out.println(" ************************************************ ");
+            System.out.println(" Success Handler ");
+            System.out.println("token.getAccessToken() = " + token.getAccessToken());
+            System.out.println(" ************************************************ ");
 
             CookieUtils.addCookie(response,"Authorization", token.getAccessToken(), 1000 * 60 * 40);
             //response.addCookie(createCookie("Authorization", token.getAccessToken()));
             response.sendRedirect(redirectUri);
+
 
 
         } else {
