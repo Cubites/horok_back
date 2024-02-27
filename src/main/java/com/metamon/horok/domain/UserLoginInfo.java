@@ -1,13 +1,17 @@
 package com.metamon.horok.domain;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Getter
 @Builder
 @Table(name = "userLoginInfo")
+@AllArgsConstructor
+@NoArgsConstructor
 public class UserLoginInfo {
 
     @Id

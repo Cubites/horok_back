@@ -6,6 +6,7 @@ import com.metamon.horok.mapper.MapMapper;
 import com.metamon.horok.repository.UsersRepository;
 import com.metamon.horok.service.UserService;
 import com.metamon.horok.vo.MapReviewVO;
+import jakarta.servlet.http.Cookie;
 import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -35,7 +36,12 @@ public class UsersController {
     }
 
     @GetMapping("/api/users/info")
-    public Optional<UserDTO> userInfo( @UserIdFromJwt Integer userId){
+    public Optional<UserDTO> userInfo( @UserIdFromJwt Integer userId,@CookieValue(value = "Authorization",required = false) String token){
+        System.out.println("cookie = 아아아" + token);
+
+        System.out.println(" **********************************************");
+        System.out.println("userId = " + userId);
+        System.out.println(" **********************************************");
         return userService.getUserInfoByUserId(userId);
     }
 
@@ -48,6 +54,9 @@ public class UsersController {
     // 마이페이지에 닉네임 출력 , 이미지 출력 , 카드 리스트 출력 ( 사용자 정보 조회 컨트롤러 )
     @GetMapping("/api/users")
     public Optional<UserDTO> UserInfo(@UserIdFromJwt Integer userId) {
+
+
+
         return userService.getUserInfoByUserId(userId);
     }
 
