@@ -64,8 +64,8 @@ public class HorokSecurityConfig {
                 http.authorizeHttpRequests((auth) ->
 
                 auth.requestMatchers("/", "/oauth2/**", "/login/**", "/token/**").permitAll()
-                                //.anyRequest().authenticated())
-                                .anyRequest().permitAll())
+                                .anyRequest().authenticated())
+                                //.anyRequest().permitAll())
                                 .addFilterBefore(jwtTokenAuthFilters, UsernamePasswordAuthenticationFilter.class)
                                 .addFilterBefore(jwtExceptionFilter, JwtTokenAuthFilters.class).oauth2Login((oauth2) ->
 
