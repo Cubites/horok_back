@@ -57,6 +57,7 @@ public class CookieUtils {
         if (cookies != null && cookies.length > 0) {
             for (Cookie cookie: cookies) {
                 if (cookie.getName().equals(name)) {
+                    System.out.println(" 여기 작동함 이러면 cookie.setValue 설정을 바꿔야함");
                     cookie.setValue("");
                     cookie.setPath("/");
                     cookie.setMaxAge(0);
