@@ -10,6 +10,7 @@ import com.metamon.horok.repository.ParticipantsRepository;
 import com.metamon.horok.repository.UsersRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -54,6 +55,33 @@ public class FolderServiceImpl implements FolderService {
             return true;
         }
 
+    }
+
+    @Override
+    public String deleteFolder(Integer userId, Integer folderId) {
+        Folders f = folderRepo.findById(folderId).orElse(null);
+        if(f != null){
+            try {
+                partRepo.deleteByUser_UserIdAndFolder_FolderId(userId, folderId);
+                System.out.println("삭제 성공");
+                Participants p = partRepo.findByFolder(f);
+                if(p == null){
+                    folderRepo.deleteById(folderId);
+                }
+                return "true";
+            } catch (EmptyResultDataAccessException e) {
+                System.out.println("삭제 실패: 해당 ID의 엔티티가 존재하지 않음");
+                return "false";
+            }
+        }else {
+            return "false";
+        }
+
+    }
+
+    @Override
+    public Integer updateFolder(Map<String, String>  map) {
+        return folderRepo.updateFolderInfo(map.get("folderName"), map.get("folderImg"), Integer.parseInt( map.get("folderId")));
     }
 
     @Override

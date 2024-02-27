@@ -69,6 +69,16 @@ public class FoldersController {
         return msg;
     }
 
+    @DeleteMapping("/api/folders/{folderId}")
+    public String folderDelete(@UserIdFromJwt Integer userId, @PathVariable("folderId") Integer folderId){
+        return folderService.deleteFolder(userId, folderId);
+    }
+
+    @PatchMapping("/api/folders")
+    public Integer folders(@RequestBody Map<String, String> map){
+        return folderService.updateFolder(map);
+    }
+
 
 
 }
