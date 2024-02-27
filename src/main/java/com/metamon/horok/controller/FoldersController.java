@@ -72,10 +72,10 @@ public class FoldersController {
     }
 
     @GetMapping("/api/folders/notshared/{reviewId}")
-    public List<FolderDTO> getNotSharedFolderList(@UserIdFromJwt Integer userId, @PathVariable("reviewId") Integer reviewId){
+    public List<FolderDTO> getNotSharedFolderList(@UserIdFromJwt Integer userId, @PathVariable("reviewId") Integer reviewId) {
         System.out.println(userId);
         return folderService.findFolderIdsByUserIdAndReviewIdNotShared(userId, reviewId);
-
+    }
     @DeleteMapping("/api/folders/{folderId}")
     public String folderDelete(@UserIdFromJwt Integer userId, @PathVariable("folderId") Integer folderId){
         return folderService.deleteFolder(userId, folderId);
