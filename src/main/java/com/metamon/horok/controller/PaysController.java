@@ -4,6 +4,8 @@ import com.metamon.horok.config.javaconfig.UserIdFromJwt;
 import com.metamon.horok.dto.PaysDTO;
 import com.metamon.horok.dto.SimplePayDTO;
 import com.metamon.horok.service.PaysService;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,7 +23,19 @@ public class PaysController {
         this.paysService = paysService;
     }
     @GetMapping("/api/pays/paylist")
-    public List<PaysDTO> payList(@UserIdFromJwt Integer userId){
+    public List<PaysDTO> payList(@UserIdFromJwt Integer userId, HttpServletRequest request){
+        System.out.println("Paycontroller************************************");
+        Cookie[] cookies = request.getCookies();
+        if(cookies != null) {
+            for (Cookie cookie : cookies) {
+                System.out.println("************************************");
+                System.out.println("cookie = " + cookie.getName());
+                System.out.println("cookie.getValue() = " + cookie.getValue());
+                System.out.println("************************************");
+            }
+        }
+        System.out.println("Paycontroller************************************");
+
         return paysService.getPaysListByUserId(userId);
     }
 

@@ -37,8 +37,8 @@ public class JwtTokenAuthFilters extends OncePerRequestFilter {
 
     @Override
     protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
-
-        return request.getRequestURI().contains("/token/refresh") || request.getRequestURI().contains("/login/page");
+        System.out.println("request.getRequestURI().contains(\"/\") = " + request.getRequestURI().contains("/"));
+        return request.getRequestURI().contains("/");
     }
 
     @Override
@@ -47,7 +47,12 @@ public class JwtTokenAuthFilters extends OncePerRequestFilter {
 
 
         Cookie[] cookies = request.getCookies();
+        String authorization22 = request.getHeader("Authorization");
 
+        System.out.println("*********************************************************************");
+        System.out.println("cookies = " + Arrays.toString(cookies));
+        System.out.println("authorization22 = " + authorization22);
+        System.out.println("*********************************************************************");
 
         if(cookies != null) {
             for (Cookie cookie : cookies) {

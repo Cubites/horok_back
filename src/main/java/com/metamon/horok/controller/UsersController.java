@@ -37,12 +37,9 @@ public class UsersController {
 
     // 마이페이지에 닉네임 출력 , 이미지 출력 , 카드 리스트 출력 ( 사용자 정보 조회 컨트롤러 )
     @GetMapping("/api/users/info")
-    public Optional<UserDTO> userInfo( @UserIdFromJwt Integer userId,@CookieValue(value = "Authorization",required = false) String token){
-        System.out.println("cookie = 아아아" + token);
+    public Optional<UserDTO> userInfo( @UserIdFromJwt Integer userId){
 
-        System.out.println(" **********************************************");
-        System.out.println("userId = " + userId);
-        System.out.println(" **********************************************");
+
         return userService.getUserInfoByUserId(userId);
     }
 

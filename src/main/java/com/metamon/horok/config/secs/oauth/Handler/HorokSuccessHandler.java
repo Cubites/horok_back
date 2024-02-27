@@ -28,6 +28,9 @@ import static com.metamon.horok.config.secs.oauth.HttpCookieOAuth2AuthorizationR
 public class HorokSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
     private final JwtUtil jwtUtil;
     private final HttpCookieOAuth2AuthorizationRequestRepository httpCookieOAuth2AuthorizationRequestRepository;
+
+    public static final String OAUTH2_AUTHORIZATION_REQUEST_COOKIE_NAME ="oauth2_auth_request";
+    public static final String REDIRECT_URI_PARAM_COOKIE_NAME = "redirect_uri";
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
 
@@ -61,11 +64,18 @@ public class HorokSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
             Integer userId = oAuth2User.getAttribute("userId");
             GeneratedToken token = jwtUtil.generatedTokenWithUserId(email,role,provider,userId);
 
-
+            System.out.println(" ************************************************ ");
+            System.out.println(" Success Handler ");
+            System.out.println("token.getAccessToken() = " + token.getAccessToken());
+            System.out.println(" ************************************************ ");
 
             CookieUtils.addCookie(response,"Authorization", token.getAccessToken(), 1000 * 60 * 40);
+
+            CookieUtils.deleteCookie(request,response,OAUTH2_AUTHORIZATION_REQUEST_COOKIE_NAME);
+            CookieUtils.deleteCookie(request,response,REDIRECT_URI_PARAM_COOKIE_NAME);
             //response.addCookie(createCookie("Authorization", token.getAccessToken()));
             response.sendRedirect(redirectUri);
+
 
 
         } else {
@@ -106,6 +116,9 @@ public class HorokSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
     }
 
     protected void clearAuthenticationAttributes(HttpServletRequest request, HttpServletResponse response) {
+
+
+
         super.clearAuthenticationAttributes(request);
         httpCookieOAuth2AuthorizationRequestRepository.removeAuthorizationRequestCookies(request, response);
     }
