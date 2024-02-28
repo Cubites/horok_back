@@ -25,16 +25,8 @@ public class PaysController {
     @GetMapping("/api/pays/paylist")
     public List<PaysDTO> payList(@UserIdFromJwt Integer userId, HttpServletRequest request){
 
-        System.out.println(" *******************************************");
-        Cookie[] cookies = request.getCookies();
-        if(cookies != null){
-            for (Cookie cookie : cookies) {
-                System.out.println("cookie.getName() = " + cookie.getName());
-                System.out.println("cookie.getValue() = " + cookie.getValue());
-            }
-        }
 
-        System.out.println(" *******************************************");
+
 
         return paysService.getPaysListByUserId(userId);
     }

@@ -63,14 +63,14 @@ public class FolderServiceImpl implements FolderService {
         if(f != null){
             try {
                 partRepo.deleteByUser_UserIdAndFolder_FolderId(userId, folderId);
-                System.out.println("삭제 성공");
-                Participants p = partRepo.findByFolder(f);
-                if(p == null){
+
+                List<Participants> p = partRepo.findByFolder(f);
+                if(p.size() == 0 || p == null){
                     folderRepo.deleteById(folderId);
                 }
                 return "true";
             } catch (EmptyResultDataAccessException e) {
-                System.out.println("삭제 실패: 해당 ID의 엔티티가 존재하지 않음");
+
                 return "false";
             }
         }else {

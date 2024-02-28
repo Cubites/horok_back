@@ -25,7 +25,7 @@ public class TestController {
     public AuthUserDto success(Authentication authenticationPrincipal){
 
         AuthUserDto principal = (AuthUserDto)authenticationPrincipal.getPrincipal();
-        System.out.println("principal = " + principal);
+
         return principal;
     }
 
@@ -34,7 +34,7 @@ public class TestController {
 
 
 
-        log.info("여기는작동하니");
+
         return userid+"";
     }
 }

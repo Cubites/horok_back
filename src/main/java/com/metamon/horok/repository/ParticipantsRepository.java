@@ -11,7 +11,7 @@ import org.springframework.data.repository.query.Param;
 import java.util.List;
 
 public interface ParticipantsRepository extends JpaRepository<Participants,Integer> {
-    Participants findByFolder(Folders folderName);
+    List<Participants> findByFolder(Folders folderName);
     Integer countByUser_UserId(Integer userId);
 
     @Query("select new com.metamon.horok.dto.PartFolderDTO(p.folderParticipantsId as folderParticipantsId, u.userId as userId, f.folderId as folderId, f.folderName as folderName) from Participants p JOIN p.folder f JOIN p.user u WHERE u.userId = :userId order by p.folderFavor desc")

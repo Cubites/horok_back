@@ -45,7 +45,7 @@ public class LoginController {
                     .build();
         }else {
 
-            log.info("param {}",param);
+
             newUser = Users.builder().userNickname(param.getNick())
                     .userProfile("profile.png")
                     .personalCode("1")
