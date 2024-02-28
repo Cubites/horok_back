@@ -34,6 +34,10 @@ public class LoginController {
     @PostMapping("/login/signup")
     public ResponseEntity<Map<String,String>> signUpUser(@ModelAttribute SignUpUserDto param) throws IOException {
         Users newUser=null;
+        System.out.println("*****************************************************");
+        log.info("param = {}",param);
+        System.out.println("*****************************************************");
+
         if(param.getProfile() != null) {
             UploadImageDTO uploadImageDTO = fileStore.storeFile(param.getProfile());
             newUser = Users.builder().userNickname(param.getNick())
