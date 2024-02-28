@@ -57,6 +57,7 @@ public class JwtTokenAuthFilters extends OncePerRequestFilter {
             }
         }
 
+        log.info("이건 쿠키 값입니다, {}",authroization);
 
         if(authroization == null){
 
@@ -70,7 +71,7 @@ public class JwtTokenAuthFilters extends OncePerRequestFilter {
             jwtUtil.isNotExpired(acctoken);
 
         }catch (ExpiredJwtException es){
-
+            log.info("만료에러");
             if((acctoken = tokenRefresh(request,response)).equals(REFRESH_EXPIRED))
                 throw new RefreshTokenExpiredException("Refresh Token 만료");
             else {
@@ -80,7 +81,7 @@ public class JwtTokenAuthFilters extends OncePerRequestFilter {
             //토큰이 expired 된 것 처리
         }
         catch (JwtException e) {
-
+            log.info("뭔가다른에러");
             //토큰 조작 처리
 
             //나머지 Eecption

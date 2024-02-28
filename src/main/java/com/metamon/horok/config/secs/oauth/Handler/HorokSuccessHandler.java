@@ -69,7 +69,7 @@ public class HorokSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
             GeneratedToken token = jwtUtil.generatedTokenWithUserId(email,role,provider,userId);
 
             //이미 있는 인증 쿠키 삭제
-            CookieUtils.deleteCookie(request,response,"Authorization");
+           // CookieUtils.deleteCookie(request,response,"Authorization");
             
 
             CookieUtils.addCookie(response,"Authorization", token.getAccessToken(), 1000 * 60 * 40);
