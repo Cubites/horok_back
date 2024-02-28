@@ -55,6 +55,10 @@ public class HorokSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
 
         //첫 요청 정보 들어왔던 쿠키 비워주기
         clearAuthenticationAttributes(request,response);
+
+        //이미 인증 정보 있으면 삭제할 것임 왜냐면 새로발급
+        CookieUtils.deleteCookie(request,response,"Authorization");
+
         // 회원이 존재할경우
         if (isExist) {
 
