@@ -45,13 +45,14 @@ public class JwtTokenAuthFilters extends OncePerRequestFilter {
         Cookie[] cookies = request.getCookies();
         String authorization22 = request.getHeader("Authorization");
 
-
+        log.info("여기는 필터입니다 로그인시 통과하나요?1");
 
         if(cookies != null) {
             for (Cookie cookie : cookies) {
 
                 if (cookie.getName().equals("Authorization")) {
                     authroization = cookie.getValue();
+                    log.info("여기는 필터입니다 로그인시 통과하나요?2");
                 }
             }
         }
@@ -106,7 +107,7 @@ public class JwtTokenAuthFilters extends OncePerRequestFilter {
         SecurityContextHolder.getContext().setAuthentication(auth);
 
 
-
+        log.info("여기는 필터입니다 로그인시 통과하나요?");
 
         filterChain.doFilter(request, response);
     }
