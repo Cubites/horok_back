@@ -38,7 +38,7 @@
         JOIN stores s ON r.store_id = s.store_id
         WHERE u.user_id = #{user_id}
         GROUP BY r.review_id
-        UNION
+        UNION DISTINCT
         SELECT
             r.review_id AS reviewId
             , s.store_id AS storeId
@@ -58,6 +58,28 @@
         FROM users u
         JOIN reviews r ON u.user_id = r.user_id
         JOIN stores s ON r.store_id = s.store_id
-        WHERE u.user_id = #{user_id}
+        WHERE r.review_id NOT IN (
+            SELECT
+                r.review_id
+            FROM users u
+            JOIN participants p ON u.user_id = p.user_id
+            JOIN folders f ON p.folder_id = f.folder_id
+            JOIN folder_reviews fr ON f.folder_id = fr.folder_id
+            JOIN (
+                SELECT
+                    r1.review_id
+                    , r1.store_id
+                    , r1.user_id
+                    , u1.user_nickname
+                    , r1.image1
+                    , r1.review_score
+                    , r1.review_content
+                    , r1.pay_date
+                FROM reviews r1
+                JOIN users u1 ON u1.user_id = r1.user_id
+            ) r ON fr.review_id = r.review_id
+            WHERE u.user_id = #{user_id}
+            GROUP BY r.review_id
+        ) AND u.user_id = #{user_id}
     </select>
 </mapper>
