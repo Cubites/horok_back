@@ -4,7 +4,6 @@ package com.metamon.horok.domain;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -14,38 +13,25 @@ import java.util.List;
 @Table(name = "cards")
 @EqualsAndHashCode(of="cardNumber")
 @AllArgsConstructor
-
+@NoArgsConstructor
 public class Cards{
 
     @Id
-    //직접할당해야함
-//    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    // 직접 할당하는 값이므로 @GeneratedValue는 사용하지 않음
     private String cardNumber;
 
-    //카드를 등록할 때 user_id값이 필수임, 단방향 매핑이라 내부적으로 특정 값이 필요
-
-    private Integer user_id;
     private String cardName;
     private String cardImg;
 
-    @OneToMany
+    @OneToMany(fetch = FetchType.EAGER) // TODO
     @JoinColumn(name = "card_number")
-    private List<Pays> payList = new ArrayList<>();
-
+    private List<Pays> payList;
 
     // builder 메소드 재정의 필수값 지정 -> 카드번호는 AI사용x 카드 생성시 무조건 입력받도록 재정의
     public static CardsBuilder builder(String cardNumber){
         return innerBuilder().cardNumber(cardNumber);
     }
     //jpa
-    protected Cards(){
-
-    }
-
-    public void setUser_id(Integer userId){
-        this.user_id = userId;
-
-    }
 
 
 }

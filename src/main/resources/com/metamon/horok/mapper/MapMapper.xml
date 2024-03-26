@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.metamon.horok.mapper.MapMapper">
+    <select id="readAllReviewFromUserId" parameterType="Integer" resultType="com.metamon.horok.vo.MapReviewVO">
+        SELECT
+            r.review_id AS reviewId
+            , s.store_id AS storeId
+            , f.folder_id AS folderId
+            , r.user_nickname AS userNickname
+            , f.folder_name AS folderName
+            , f.folder_img AS folderImg
+            , s.store_name AS storeName
+            , s.store_category AS storeCategory
+            , s.store_addr AS storeAddr
+            , s.latitude
+            , s.longitude
+            , r.image1
+            , r.review_score AS reviewScore
+            , r.review_content AS reviewContent
+            , r.pay_date AS payDate
+        FROM users u
+        JOIN participants p ON u.user_id = p.user_id
+        JOIN folders f ON p.folder_id = f.folder_id
+        JOIN folder_reviews fr ON f.folder_id = fr.folder_id
+        JOIN (
+            SELECT
+                r1.review_id
+                , r1.store_id
+                , r1.user_id
+                , u1.user_nickname
+                , r1.image1
+                , r1.review_score
+                , r1.review_content
+                , r1.pay_date
+            FROM reviews r1
+            JOIN users u1 ON u1.user_id = r1.user_id
+        ) r ON fr.review_id = r.review_id
+        JOIN stores s ON r.store_id = s.store_id
+        WHERE u.user_id = #{user_id}
+        GROUP BY r.review_id
+        UNION DISTINCT
+        SELECT
+            r.review_id AS reviewId
+            , s.store_id AS storeId
+            , 0 AS folderId
+            , u.user_nickname AS userNickname
+            , '내 폴더' AS folderName
+            , 'folder-263CFF' AS folderImg
+            , s.store_name AS storeName
+            , s.store_category AS storeCategory
+            , s.store_addr AS storeAddr
+            , s.latitude
+            , s.longitude
+            , r.image1
+            , r.review_score AS reviewScore
+            , r.review_content AS reviewContent
+            , r.pay_date AS payDate
+        FROM users u
+        JOIN reviews r ON u.user_id = r.user_id
+        JOIN stores s ON r.store_id = s.store_id
+        WHERE r.review_id NOT IN (
+            SELECT
+                r.review_id
+            FROM users u
+            JOIN participants p ON u.user_id = p.user_id
+            JOIN folders f ON p.folder_id = f.folder_id
+            JOIN folder_reviews fr ON f.folder_id = fr.folder_id
+            JOIN (
+                SELECT
+                    r1.review_id
+                    , r1.store_id
+                    , r1.user_id
+                    , u1.user_nickname
+                    , r1.image1
+                    , r1.review_score
+                    , r1.review_content
+                    , r1.pay_date
+                FROM reviews r1
+                JOIN users u1 ON u1.user_id = r1.user_id
+            ) r ON fr.review_id = r.review_id
+            WHERE u.user_id = #{user_id}
+            GROUP BY r.review_id
+        ) AND u.user_id = #{user_id}
+    </select>
+</mapper>

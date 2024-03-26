@@ -14,7 +14,7 @@ public class Participants {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer folderParticipantsId;
-    @Column(columnDefinition = "TINYINT(4)")
+    @Column(columnDefinition = "TINYINT(4)" )
     private Boolean folderFavor;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -26,13 +26,17 @@ public class Participants {
 
 
     /*
-    * 연관관계 편의 메서드
-    * */
+     * 연관관계 편의 메서드
+     * */
 
     public void setFoldersAndUsers(Folders folder, Users user){
         this.folder = folder;
         this.user = user;
         folder.getParticipantsList().add(this);
         user.getParticipantsList().add(this);
+    }
+
+    public void setFolderFavor(Boolean folderFavor) {
+        this.folderFavor = folderFavor;
     }
 }
